@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/verbsMainFragment">
+    <fragment
+        android:id="@+id/verbsMainFragment"
+        android:name="com.rai.irregularverbs.ui.VerbsMainFragment"
+        android:label="fragment_verbs_main"
+        tools:layout="@layout/fragment_verbs_main" >
+        <action
+            android:id="@+id/action_verbsMainFragment_to_commonMenuFragment"
+            app:destination="@id/commonMenuFragment" />
+        <action
+            android:id="@+id/action_verbsMainFragment_to_listVerbFragment"
+            app:destination="@id/listVerbFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/commonMenuFragment"
+        android:name="com.rai.irregularverbs.ui.CommonMenuFragment"
+        android:label="fragment_common_menu"
+        tools:layout="@layout/fragment_common_menu" >
+        <action
+            android:id="@+id/action_commonMenuFragment_to_examFragment"
+            app:destination="@id/examFragment" />
+        <action
+            android:id="@+id/action_commonMenuFragment_to_imagesFragment"
+            app:destination="@id/imagesFragment" />
+        <action
+            android:id="@+id/action_commonMenuFragment_to_flashcardFragment"
+            app:destination="@id/flashcardFragment" />
+        <argument
+            android:name="typeMenu"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/examFragment"
+        android:name="com.rai.irregularverbs.ui.ExamFragment"
+        android:label="fragment_exam"
+        tools:layout="@layout/fragment_exam" >
+        <argument
+            android:name="chapter"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/imagesFragment"
+        android:name="com.rai.irregularverbs.ui.ImagesFragment"
+        android:label="fragment_images"
+        tools:layout="@layout/fragment_images" >
+        <argument
+            android:name="chapter"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/flashcardFragment"
+        android:name="com.rai.irregularverbs.ui.FlashcardFragment"
+        android:label="fragment_flashcard"
+        tools:layout="@layout/fragment_flashcard" >
+        <argument
+            android:name="chapter"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/listVerbFragment"
+        android:name="com.rai.irregularverbs.ui.ListVerbFragment"
+        android:label="fragment_list_verb"
+        tools:layout="@layout/fragment_list_verb" />
+</navigation>

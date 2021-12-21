@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.wajahatkarim3.easyflipview.EasyFlipView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/flipView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:flipDuration="40000"
+    app:flipEnabled="true"
+    app:flipOnTouch="false"
+
+    app:flipType="horizontal">
+    <!--Back-->
+    <include
+        android:id="@+id/backSide"
+        layout="@layout/flashcard_down_side" />
+
+    <!--Front-->
+    <include
+        android:id="@+id/frontSide"
+        layout="@layout/flashcard_up_side" />
+
+</com.wajahatkarim3.easyflipview.EasyFlipView>

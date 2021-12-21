@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">IrregularVerbs</string>
+    <string name="exam">Exam</string>
+    <string name="list">List</string>
+    <string name="flascard">Flascard</string>
+    <string name="image">Image</string>
+    <string name="most50">Most 50</string>
+    <string name="plus50">Plus 50</string>
+    <string name="pro">Pro</string>
+    <string name="level1">Level 1</string>
+    <string name="level2">Level 2</string>
+    <string name="level3">Level 3</string>
+    <string name="ok">OK</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
