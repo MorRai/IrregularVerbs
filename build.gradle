@@ -5,6 +5,7 @@ buildscript {
         nav_version = "2.3.5"
         kotlin_version = "1.5.30"
         room_version = '2.3.0'
+        lifecycle_version = '2.3.1'
     }
     repositories {
         google()

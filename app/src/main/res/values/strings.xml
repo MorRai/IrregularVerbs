@@ -11,6 +11,14 @@
     <string name="level2">Level 2</string>
     <string name="level3">Level 3</string>
     <string name="ok">OK</string>
+    <string name="v2">v2</string>
+    <string name="v3">v3</string>
+    <string name="v2_text">Simple Past(V2)</string>
+    <string name="v3_text">Past Participle(V3)</string>
+    <string name="text_error">Wrong! Correct answer:</string>
+
+    <string name="text_answer"> \"%1$s\"</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

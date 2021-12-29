@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:id="@+id/form1"
+        android:id="@+id/form3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/ImageTextStyle"
@@ -27,13 +27,13 @@
         style="@style/ImageTextStyle"
         android:layout_marginTop="16dp"
         tools:text="Form2"
-        app:layout_constraintEnd_toStartOf="@+id/form1"
+        app:layout_constraintEnd_toStartOf="@+id/form3"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/form3"
+        app:layout_constraintStart_toEndOf="@+id/form1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/form3"
+        android:id="@+id/form1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/ImageTextStyle"

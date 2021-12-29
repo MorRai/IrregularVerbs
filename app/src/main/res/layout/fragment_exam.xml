@@ -9,18 +9,18 @@
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/form1"
+        style="@style/ImageTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
-        style="@style/ImageTextStyle"
-        tools:text="Form1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Form1" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialButton"
+        android:id="@+id/buttonOk"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_marginEnd="8dp"
@@ -36,6 +36,7 @@
 
     <EditText
         android:id="@+id/editText"
+
         android:layout_width="300dp"
         android:layout_height="65dp"
         android:layout_marginTop="32dp"
@@ -43,17 +44,17 @@
         android:backgroundTint="@color/secondaryColor"
         android:backgroundTintMode="screen"
         android:gravity="center_horizontal|center_vertical"
-        android:padding="5dip"
-        tools:hint="Form2"
         android:inputType="text"
-        android:textColorHint="@color/primaryColor"
+        android:padding="5dip"
         android:textColor="@color/primaryColor"
+        android:textColorHint="@color/hint_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView2" />
+        app:layout_constraintTop_toTopOf="@+id/typeForm"
+        tools:hint="Form2" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/typeForm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -61,12 +62,108 @@
         android:backgroundTint="@color/greyBack"
         android:gravity="center_horizontal"
         android:padding="8dp"
-        tools:text="V2"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/form1"
+        tools:text="V2" />
 
+    <TextView
+        android:id="@+id/answerText"
+        style="@style/ListTextStyle"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText"
+        tools:text="TextView" />
+
+    <TextView
+        android:id="@+id/textError"
+        style="@style/ImageTextStyle"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:text="@string/text_error"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/answerText" />
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcvForm1"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        app:cardBackgroundColor="@color/primaryDarkColor"
+        app:layout_constraintEnd_toStartOf="@+id/mcvForm2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textError">
+
+        <TextView
+            android:id="@+id/answer_form1"
+            style="@style/ListTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            tools:text="TextView" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcvForm2"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="@color/primaryDarkColor"
+        app:layout_constraintEnd_toStartOf="@+id/mcvForm3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/mcvForm1"
+        app:layout_constraintTop_toBottomOf="@+id/textError">
+
+        <TextView
+            android:id="@+id/answer_form2"
+            style="@style/ListTextStyle"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:text="TextView" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcvForm3"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        app:cardBackgroundColor="@color/primaryDarkColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/mcvForm2"
+        app:layout_constraintTop_toBottomOf="@+id/textError"
+        tools:layout_editor_absoluteY="291dp">
+
+        <TextView
+            android:id="@+id/answer_form3"
+            style="@style/ListTextStyle"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:text="TextView" />
+
+    </com.google.android.material.card.MaterialCardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,5 +20,8 @@
     <color name="secondaryTextColor">#feea15</color>
 
 
+    <color name="hint_color">#f5eed2</color>
+
+
 
 </resources>

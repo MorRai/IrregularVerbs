@@ -17,5 +17,7 @@ data class IrregularVerbs (
     @ColumnInfo(name = "example3") val example3: String,
     @ColumnInfo(name = "imageUri") val imageUri: String,
     @ColumnInfo(name = "part") val part: Int,
+    @ColumnInfo(name = "numCorrectV2") val numCorrectV2: Int,
+    @ColumnInfo(name = "numCorrectV3") val numCorrectV3: Int
 
 )
