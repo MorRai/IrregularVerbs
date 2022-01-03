@@ -1,17 +1,13 @@
 package com.rai.irregularverbs.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.rai.irregularverbs.R
 import com.rai.irregularverbs.data.IrregularVerbs
 import com.rai.irregularverbs.databinding.FlashcardItemBinding
-import com.wajahatkarim3.easyflipview.EasyFlipView
 
 class FlashcardAdapter : ListAdapter<IrregularVerbs, FlashcardAdapter.FlashcardViewHolder>(DiffCallback) {
 
@@ -34,6 +30,8 @@ class FlashcardAdapter : ListAdapter<IrregularVerbs, FlashcardAdapter.FlashcardV
 
      class FlashcardViewHolder(private var binding: FlashcardItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+
         private val backSide = binding.backSide.root
         private val frontSide = binding.frontSide.root
         private val flipView = binding.flipView
@@ -45,14 +43,13 @@ class FlashcardAdapter : ListAdapter<IrregularVerbs, FlashcardAdapter.FlashcardV
         }
         init {
             backSide.setOnClickListener {
-                flipView.flipDuration = 500
-
+                flipView.flipDuration = 5
                 flipView.flipTheView()
             }
             frontSide.setOnClickListener {
                 flipView.flipDuration = 500
-                flipView.isAutoFlipBack = true
-                flipView.autoFlipBackTime=2000
+                //flipView.isAutoFlipBack = true
+               // flipView.autoFlipBackTime=2000
                 flipView.flipTheView()
             }
         }

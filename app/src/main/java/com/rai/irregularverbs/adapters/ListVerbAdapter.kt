@@ -1,7 +1,9 @@
 package com.rai.irregularverbs.adapters
 
 
+import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
@@ -15,19 +17,18 @@ import com.rai.irregularverbs.constants.MenuType.LIST
 import com.rai.irregularverbs.data.IrregularVerbs
 import com.rai.irregularverbs.databinding.ImageItemBinding
 import com.rai.irregularverbs.databinding.ListItemBinding
-
+import android.graphics.drawable.Drawable
+import androidx.core.content.ContextCompat
 
 
 
 class ListVerbAdapter(val type: Int) : ListAdapter<IrregularVerbs, RecyclerView.ViewHolder>(DiffCallback)  {
-
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
 
         viewType: Int
     ): RecyclerView.ViewHolder {
-
         return when (type) {
             IMAGE -> ImageViewHolder.from(parent)
             LIST -> ListVerbViewHolder.from(parent)
@@ -99,6 +100,9 @@ class ListVerbAdapter(val type: Int) : ListAdapter<IrregularVerbs, RecyclerView.
             binding.example1.text = irregularVerbs.example1
             binding.example2.text = irregularVerbs.example2
             binding.example3.text = irregularVerbs.example3
+            val context = rootView.context
+            val resId = context.getResources().getIdentifier("${irregularVerbs.form1}_verb", "drawable", context.getPackageName())
+            binding.imageView.setImageResource(resId)
             if(position % 2 == 0)
             {
                 rootView.setBackgroundResource(R.color.primaryColor)
@@ -136,6 +140,7 @@ class ListVerbAdapter(val type: Int) : ListAdapter<IrregularVerbs, RecyclerView.
             }
         }
     }
+
 
 
 }

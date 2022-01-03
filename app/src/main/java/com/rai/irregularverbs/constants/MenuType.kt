@@ -1,8 +1,8 @@
 package com.rai.irregularverbs.constants
 
 object MenuType {
-    val EXAM = 1
-    val FLASHCARD = 2
-    val IMAGE = 3
-    val LIST = 4
+    const val EXAM = 1
+    const val FLASHCARD = 2
+    const val IMAGE = 3
+    const val LIST = 4
 }

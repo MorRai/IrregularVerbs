@@ -6,7 +6,7 @@ import com.rai.irregularverbs.data.IrregularVerbsDao
 import kotlinx.coroutines.launch
 
 class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel() {
-    var part: Int = 1
+    var part: Int = 0
     var editText: String = ""
 
 
@@ -15,24 +15,22 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel
         get() = _checkVisibility
 
 
-    private val _previousVerb = MutableLiveData<IrregularVerbs>()
-    val previousVerb: LiveData<IrregularVerbs>
+    private val _previousVerb = MutableLiveData<IrregularVerbs?>()
+    val previousVerb: LiveData<IrregularVerbs?>
         get() = _previousVerb
 
 
 
-    private val _randomVerb = MutableLiveData<IrregularVerbs>()
-    val randomVerb: LiveData<IrregularVerbs>
+    private val _randomVerb = MutableLiveData<IrregularVerbs?>()
+    val randomVerb: LiveData<IrregularVerbs?>
         get() = _randomVerb
 
-
     init {
-        getRandomVerb(part)
+        getRandomVerb()
     }
 
 
-
-    private fun getRandomVerb(part: Int){
+     private fun getRandomVerb(){
         viewModelScope.launch {
             _randomVerb.value = irregularVerbsDao.getRandom(part)
         }
@@ -44,25 +42,36 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel
         }
     }
 
-    fun getv2orv3(verb: IrregularVerbs): Int{
-        if (verb.numCorrectV3>= 3){
-            return 2
-        }else if(verb.numCorrectV2 >= 3){
-            return 3
-        }else{
-         return (2..3).random()
+    fun getV2orV3(verb: IrregularVerbs): Int{
+        return when {
+            verb.numCorrectV3>= 3 -> {
+                2
+            }
+            verb.numCorrectV2 >= 3 -> {
+                3
+            }
+            else -> {
+                (2..3).random()
+            }
         }
     }
 
-    fun nextVerb(verb: IrregularVerbs,textСheck:String,editText:String) {
-        refresh(verb,textСheck,editText)
-        updateItem(verb)
-        getRandomVerb(part)
+    fun nextVerb(verb: IrregularVerbs,textCheck:String,editText:String, getV2orV3: Int) {
+        refresh(verb,textCheck,editText, getV2orV3)
+        getRandomVerb()
     }
 
-    private fun refresh(irregularVerbs: IrregularVerbs,textСheck:String,editText:String){
-        if(editText.equals(textСheck)){
+    private fun refresh(irregularVerbs: IrregularVerbs,textCheck:String,editText:String, getV2orV3: Int){
+        if(editText==textCheck){
             _checkVisibility.value = false
+            if (getV2orV3 == 2) {
+                val newIrregularVerbs = irregularVerbs.copy(numCorrectV2 = irregularVerbs.numCorrectV2 + 1)
+                updateItem(newIrregularVerbs)
+            }else{
+                val newIrregularVerbs = irregularVerbs.copy(numCorrectV3 = irregularVerbs.numCorrectV3 + 1)
+                updateItem(newIrregularVerbs)
+            }
+
         }else{
             _checkVisibility.value = true
             _previousVerb.value = irregularVerbs
@@ -71,6 +80,12 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel
 
     fun updateEditText(editText:String){
         this.editText = editText
+    }
+
+    fun clearIrregular(){
+        _checkVisibility.value = false
+        _previousVerb.value = null
+        getRandomVerb()
     }
 
 

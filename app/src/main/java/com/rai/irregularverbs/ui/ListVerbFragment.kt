@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rai.irregularverbs.IrregularVerbsApplication
 import com.rai.irregularverbs.adapters.ListVerbAdapter
-import com.rai.irregularverbs.constants.Charpter.Most50
 import com.rai.irregularverbs.constants.MenuType.LIST
 import com.rai.irregularverbs.databinding.FragmentListVerbBinding
 import com.rai.irregularverbs.viewmodels.ListVerbViewModel
@@ -34,11 +33,10 @@ class ListVerbFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentListVerbBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,7 +46,7 @@ class ListVerbFragment : Fragment() {
         val listVerbAdapter = ListVerbAdapter(LIST)
         recyclerView.adapter = listVerbAdapter
         lifecycle.coroutineScope.launch {
-            viewModel.fullAll().collect() {
+            viewModel.fullAll().collect {
                 listVerbAdapter.submitList(it)
             }
         }

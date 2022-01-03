@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface IrregularVerbsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(verb: IrregularVerbs)
+    suspend fun insert(verb: List<IrregularVerbs>)
 
     @Update
     suspend fun update(verb: IrregularVerbs)

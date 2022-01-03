@@ -1,33 +1,21 @@
 package com.rai.irregularverbs.ui
 
-import android.content.ClipData
-import android.content.Context
+
 import android.graphics.Color
 import android.graphics.Paint
-
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.coroutineScope
 import com.rai.irregularverbs.IrregularVerbsApplication
 import com.rai.irregularverbs.R
 import com.rai.irregularverbs.data.IrregularVerbs
-import com.rai.irregularverbs.databinding.FragmentCommonMenuBinding
 import com.rai.irregularverbs.databinding.FragmentExamBinding
 import com.rai.irregularverbs.viewmodels.ExamViewModel
 import com.rai.irregularverbs.viewmodels.ExamViewModelFactory
-import com.rai.irregularverbs.viewmodels.ListVerbViewModel
-import com.rai.irregularverbs.viewmodels.ListVerbViewModelFactory
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import androidx.core.content.ContextCompat.getSystemService
 import android.app.Activity
 
 
@@ -36,16 +24,10 @@ import android.app.Activity
 
 
 
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ExamFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ExamFragment : Fragment() {
     private var _binding: FragmentExamBinding? = null
     private val binding get() = _binding!!
-    //lateinit var irregularVerbs: IrregularVerbs
+
     private var charpter: Int = 0
 
     private val viewModel: ExamViewModel by activityViewModels {
@@ -58,26 +40,32 @@ class ExamFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentExamBinding.inflate(inflater, container, false)
         charpter = ImagesFragmentArgs.fromBundle(requireArguments()).chapter
+        if (viewModel.part != charpter){
+        viewModel.part = charpter
+        viewModel.clearIrregular()}
         return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.part = charpter
-        viewModel.randomVerb.observe(viewLifecycleOwner, Observer  {
-            bind(it)
+        viewModel.randomVerb.observe(viewLifecycleOwner, {
+            if (it != null) {
+                bind(it)
+            }
 
         })
-        viewModel.previousVerb.observe(viewLifecycleOwner, Observer  {
-            refresh(it)
+        viewModel.previousVerb.observe(viewLifecycleOwner,   {
+            if (it != null) {
+                refresh(it)
+            }
         })
-        viewModel.checkVisibility.observe(viewLifecycleOwner, Observer  {
-            refreshVisibitity(it)
+        viewModel.checkVisibility.observe(viewLifecycleOwner,   {
+            refreshVisibility(it)
         })
     }
 
@@ -85,27 +73,28 @@ class ExamFragment : Fragment() {
 
     private fun bind(irregularVerbs: IrregularVerbs) {
         binding.apply {
-            var textСheck = ""
+            val textCheck:String
             form1.text = irregularVerbs.form1
-            if (viewModel.getv2orv3(irregularVerbs) == 2){
+            val getV2orV3 = viewModel.getV2orV3(irregularVerbs)
+            if (getV2orV3 == 2){
                 editText.hint= context?.getString(R.string.v2_text)
                 typeForm.text = context?.getString(R.string.v2)
-                textСheck = irregularVerbs.form2
+                textCheck = irregularVerbs.form2
             }else{
                 editText.hint= context?.getString(R.string.v3_text)
                 typeForm.text = context?.getString(R.string.v3)
-                textСheck = irregularVerbs.form3
+                textCheck = irregularVerbs.form3
             }
             buttonOk.setOnClickListener {
                 //hide keyboard
-                val imm: InputMethodManager? =
+                val imm: InputMethodManager =
                     context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm?.hideSoftInputFromWindow(editText.getWindowToken(), 0)
+                imm.hideSoftInputFromWindow(editText.getWindowToken(), 0)
 
                 viewModel.updateEditText(editText.text.toString())
-                viewModel.nextVerb(irregularVerbs,textСheck,editText.text.toString())
+                viewModel.nextVerb(irregularVerbs,textCheck,editText.text.toString(),getV2orV3)
                 editText.setText("")
-                if (viewModel.getv2orv3(irregularVerbs) == 2){
+                if (getV2orV3 == 2){
                     mcvForm2.setBackgroundColor(Color.GREEN)
                     mcvForm3.setBackgroundColor(getResources().getColor(R.color.primaryDarkColor))}
                 else {
@@ -126,8 +115,8 @@ class ExamFragment : Fragment() {
         binding.answerForm3.text = irregularVerbs.form3
     }
 
-    private fun refreshVisibitity(checkVisibility: Boolean) {
-        if (checkVisibility == true) {
+    private fun refreshVisibility(checkVisibility: Boolean) {
+        if (checkVisibility) {
             binding.answerText.visibility = View.VISIBLE
             binding.textError.visibility = View.VISIBLE
             binding.mcvForm1.visibility = View.VISIBLE
@@ -143,6 +132,10 @@ class ExamFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 
 

@@ -3,10 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Rai/IrregularVerbs/app/src/main/res/drawable-nodpi/drawable.xml" value="0.3509259259259259" />
         <entry key="..\:/Users/Rai/IrregularVerbs/app/src/main/res/drawable/hint_edittext.xml" value="0.221875" />
         <entry key="..\:/Users/Rai/IrregularVerbs/app/src/main/res/drawable/rounded_edittext.xml" value="0.221875" />
         <entry key="..\:/Users/Rai/IrregularVerbs/app/src/main/res/layout/flashcard_down_side.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Rai/IrregularVerbs/app/src/main/res/layout/flashcard_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Rai/IrregularVerbs/app/src/main/res/layout/flashcard_up_side.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Rai/IrregularVerbs/app/src/main/res/layout/flashcard_view_pagger_2.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Rai/IrregularVerbs/app/src/main/res/layout/fragment_exam.xml" value="0.190625" />
+        <entry key="..\:/Users/Rai/IrregularVerbs/app/src/main/res/layout/fragment_flashcard.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Rai/IrregularVerbs/app/src/main/res/layout/fragment_images.xml" value="0.20572916666666666" />
         <entry key="..\:/Users/Rai/IrregularVerbs/app/src/main/res/layout/image_item.xml" value="0.190625" />
         <entry key="..\:/Users/Rai/IrregularVerbs/app/src/main/res/layout/list_item.xml" value="0.190625" />

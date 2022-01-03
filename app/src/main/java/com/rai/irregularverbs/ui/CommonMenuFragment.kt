@@ -14,11 +14,7 @@ import com.rai.irregularverbs.constants.MenuType.EXAM
 import com.rai.irregularverbs.constants.MenuType.IMAGE
 import com.rai.irregularverbs.databinding.FragmentCommonMenuBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CommonMenuFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class CommonMenuFragment : Fragment() {
 
     private var _binding: FragmentCommonMenuBinding? = null
@@ -38,7 +34,7 @@ class CommonMenuFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentCommonMenuBinding.inflate(inflater, container, false)
         val view = binding.root

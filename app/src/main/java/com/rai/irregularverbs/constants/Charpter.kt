@@ -1,8 +1,8 @@
 package com.rai.irregularverbs.constants
 
 object Charpter {
-    val Most50 = 1
-    val Plus50 = 2
-    val Pro = 3
+    const val Most50 = 1
+    const val Plus50 = 2
+    const val Pro = 3
 
 }

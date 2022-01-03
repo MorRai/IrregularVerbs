@@ -19,11 +19,8 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ImagesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
+
 class ImagesFragment : Fragment() {
     private var _binding: FragmentImagesBinding? = null
     private val binding get() = _binding!!
@@ -42,12 +39,11 @@ class ImagesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         charpter = ImagesFragmentArgs.fromBundle(requireArguments()).chapter
         // Inflate the layout for this fragment
         _binding = FragmentImagesBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,7 +53,7 @@ class ImagesFragment : Fragment() {
         val listVerbAdapter = ListVerbAdapter(IMAGE)
         recyclerView.adapter = listVerbAdapter
         lifecycle.coroutineScope.launch {
-            viewModel.fullPart(charpter).collect() {
+            viewModel.fullPart(charpter).collect {
                 listVerbAdapter.submitList(it)
             }
         }
