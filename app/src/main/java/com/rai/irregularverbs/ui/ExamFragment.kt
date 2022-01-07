@@ -17,18 +17,13 @@ import com.rai.irregularverbs.databinding.FragmentExamBinding
 import com.rai.irregularverbs.viewmodels.ExamViewModel
 import com.rai.irregularverbs.viewmodels.ExamViewModelFactory
 import android.app.Activity
-
-
-
-
-
+import androidx.navigation.fragment.findNavController
 
 
 class ExamFragment : Fragment() {
     private var _binding: FragmentExamBinding? = null
     private val binding get() = _binding!!
 
-    private var charpter: Int = 0
 
     private val viewModel: ExamViewModel by activityViewModels {
         ExamViewModelFactory(
@@ -43,10 +38,6 @@ class ExamFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentExamBinding.inflate(inflater, container, false)
-        charpter = ImagesFragmentArgs.fromBundle(requireArguments()).chapter
-        if (viewModel.part != charpter){
-        viewModel.part = charpter
-        viewModel.clearIrregular()}
         return binding.root
     }
 
@@ -56,6 +47,8 @@ class ExamFragment : Fragment() {
         viewModel.randomVerb.observe(viewLifecycleOwner, {
             if (it != null) {
                 bind(it)
+            }else{
+                findNavController().popBackStack()
             }
 
         })

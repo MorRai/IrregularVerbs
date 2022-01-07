@@ -3,6 +3,7 @@ package com.rai.irregularverbs.viewmodels
 import androidx.lifecycle.*
 import com.rai.irregularverbs.data.IrregularVerbs
 import com.rai.irregularverbs.data.IrregularVerbsDao
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel() {
@@ -25,9 +26,7 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel
     val randomVerb: LiveData<IrregularVerbs?>
         get() = _randomVerb
 
-    init {
-        getRandomVerb()
-    }
+
 
 
      private fun getRandomVerb(){
@@ -41,6 +40,8 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel
             irregularVerbsDao.update(verb)
         }
     }
+
+    fun getAvailability(part: Int): Flow<Int> = irregularVerbsDao.getAvailability(part)
 
     fun getV2orV3(verb: IrregularVerbs): Int{
         return when {

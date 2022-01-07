@@ -43,7 +43,7 @@ class FlashcardAdapter : ListAdapter<IrregularVerbs, FlashcardAdapter.FlashcardV
         }
         init {
             backSide.setOnClickListener {
-                flipView.flipDuration = 5
+                flipView.flipDuration = 500
                 flipView.flipTheView()
             }
             frontSide.setOnClickListener {

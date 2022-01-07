@@ -24,5 +24,8 @@ interface IrregularVerbsDao {
     @Query("SELECT * FROM verbs WHERE part = :part and (numCorrectV2<3 or numCorrectV3<3) ORDER BY random() LIMIT 1")
     suspend fun getRandom(part: Int): IrregularVerbs
 
+    @Query("SELECT Count(id) FROM verbs WHERE part = :part and (numCorrectV2<3 or numCorrectV3<3)")
+    fun getAvailability(part: Int): Flow<Int>
+
 
 }

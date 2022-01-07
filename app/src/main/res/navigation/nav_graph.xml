@@ -23,7 +23,9 @@
         tools:layout="@layout/fragment_common_menu" >
         <action
             android:id="@+id/action_commonMenuFragment_to_examFragment"
-            app:destination="@id/examFragment" />
+            app:destination="@id/examFragment"
+            app:launchSingleTop="false"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_commonMenuFragment_to_imagesFragment"
             app:destination="@id/imagesFragment" />
