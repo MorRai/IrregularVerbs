@@ -18,8 +18,6 @@ import com.rai.irregularverbs.constants.MenuType.IMAGE
 import com.rai.irregularverbs.databinding.FragmentCommonMenuBinding
 import com.rai.irregularverbs.viewmodels.ExamViewModel
 import com.rai.irregularverbs.viewmodels.ExamViewModelFactory
-import com.rai.irregularverbs.viewmodels.ListVerbViewModel
-import com.rai.irregularverbs.viewmodels.ListVerbViewModelFactory
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -52,8 +50,7 @@ class CommonMenuFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentCommonMenuBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -25,7 +25,7 @@ class ImagesFragment : Fragment() {
     private var _binding: FragmentImagesBinding? = null
     private val binding get() = _binding!!
 
-    private var charpter: Int = 0
+    private var chapter: Int = 0
 
     private lateinit var recyclerView: RecyclerView
 
@@ -40,7 +40,7 @@ class ImagesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        charpter = ImagesFragmentArgs.fromBundle(requireArguments()).chapter
+        chapter = ImagesFragmentArgs.fromBundle(requireArguments()).chapter
         // Inflate the layout for this fragment
         _binding = FragmentImagesBinding.inflate(inflater, container, false)
         return binding.root
@@ -53,7 +53,7 @@ class ImagesFragment : Fragment() {
         val listVerbAdapter = ListVerbAdapter(IMAGE)
         recyclerView.adapter = listVerbAdapter
         lifecycle.coroutineScope.launch {
-            viewModel.fullPart(charpter).collect {
+            viewModel.fullPart(chapter).collect {
                 listVerbAdapter.submitList(it)
             }
         }

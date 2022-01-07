@@ -1,7 +1,6 @@
 package com.rai.irregularverbs
 
 import android.app.Application
-import androidx.lifecycle.viewModelScope
 import com.rai.irregularverbs.data.IrregularVerbsDatabase
 
 class IrregularVerbsApplication : Application() {

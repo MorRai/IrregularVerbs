@@ -1,9 +1,7 @@
 package com.rai.irregularverbs.adapters
 
 
-import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
@@ -17,12 +15,11 @@ import com.rai.irregularverbs.constants.MenuType.LIST
 import com.rai.irregularverbs.data.IrregularVerbs
 import com.rai.irregularverbs.databinding.ImageItemBinding
 import com.rai.irregularverbs.databinding.ListItemBinding
-import android.graphics.drawable.Drawable
-import androidx.core.content.ContextCompat
 
 
 
-class ListVerbAdapter(val type: Int) : ListAdapter<IrregularVerbs, RecyclerView.ViewHolder>(DiffCallback)  {
+
+class ListVerbAdapter(private val type: Int) : ListAdapter<IrregularVerbs, RecyclerView.ViewHolder>(DiffCallback)  {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -32,7 +29,7 @@ class ListVerbAdapter(val type: Int) : ListAdapter<IrregularVerbs, RecyclerView.
         return when (type) {
             IMAGE -> ImageViewHolder.from(parent)
             LIST -> ListVerbViewHolder.from(parent)
-            else -> throw ClassCastException("Unknown viewType ${type}")
+            else -> throw ClassCastException("Unknown viewType $type")
         }
 
 
@@ -59,7 +56,7 @@ class ListVerbAdapter(val type: Int) : ListAdapter<IrregularVerbs, RecyclerView.
         private var binding: ListItemBinding
     ): RecyclerView.ViewHolder(binding.root) {
 
-        val rootView = binding.root
+        private val rootView = binding.root
 
         fun bind(irregularVerbs: IrregularVerbs, position: Int) {
             binding.form1.text = irregularVerbs.form1
@@ -91,7 +88,7 @@ class ListVerbAdapter(val type: Int) : ListAdapter<IrregularVerbs, RecyclerView.
         private var binding: ImageItemBinding
     ): RecyclerView.ViewHolder(binding.root) {
 
-        val rootView = binding.root
+        private val rootView = binding.root
 
         fun bind(irregularVerbs: IrregularVerbs,position: Int) {
             binding.form1.text = irregularVerbs.form1

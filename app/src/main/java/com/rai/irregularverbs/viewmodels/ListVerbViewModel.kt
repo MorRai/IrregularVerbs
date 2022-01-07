@@ -2,11 +2,10 @@ package com.rai.irregularverbs.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.rai.irregularverbs.data.IrregularVerbs
 import com.rai.irregularverbs.data.IrregularVerbsDao
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
+
 
 class ListVerbViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel() {
 
