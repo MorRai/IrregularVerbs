@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">IrregularVerbs</string>
+    <string name="app_name">Irregular Verbs</string>
     <string name="exam">Exam</string>
     <string name="list">List</string>
-    <string name="flascard">Flascard</string>
+    <string name="flascard">Flashcard</string>
     <string name="image">Image</string>
     <string name="most50">Most 50</string>
     <string name="plus50">Plus 50</string>
@@ -10,7 +10,10 @@
     <string name="level1">Level 1</string>
     <string name="level2">Level 2</string>
     <string name="level3">Level 3</string>
+    <string name="level">Level %1$s</string>
     <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="text_dialog">You completed this level.Do you want to reset your level progress?</string>
     <string name="v2">v2</string>
     <string name="v3">v3</string>
     <string name="v2_text">Simple Past(V2)</string>

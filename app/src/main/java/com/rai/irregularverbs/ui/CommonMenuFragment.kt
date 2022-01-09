@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.NavDirections
@@ -28,6 +29,9 @@ class CommonMenuFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var typeMenu: Int = 0
+    private var blockMost50: Boolean = false
+    private var blockPlus50: Boolean = false
+    private var blockPro: Boolean = false
 
     private val viewModel: ExamViewModel by activityViewModels {
         ExamViewModelFactory(
@@ -56,41 +60,42 @@ class CommonMenuFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (typeMenu == EXAM) {
-        lifecycle.coroutineScope.launch {
-            viewModel.getAvailability(Most50).collect {
-                binding.most50Button.isEnabled = it != 0
-            }
+            viewModel.getAvailability(Most50).observe(viewLifecycleOwner, {
+                //binding.most50Button.isClickable = it != 0
+                blockMost50 = it == 0
+            })
+            viewModel.getAvailability(Plus50).observe(viewLifecycleOwner, {
+                //binding.most50Button.isClickable = it != 0
+                blockPlus50 = it == 0
+            })
+            viewModel.getAvailability(Pro).observe(viewLifecycleOwner, {
+                //binding.most50Button.isClickable = it != 0
+                blockPro = it == 0
+            })
         }
-        lifecycle.coroutineScope.launch {
-            viewModel.getAvailability(Plus50).collect {
-                binding.plus50Button.isEnabled = it != 0
-            }
-        }
-        lifecycle.coroutineScope.launch {
-            viewModel.getAvailability(Pro).collect {
-                binding.proButton.isEnabled = it != 0
-            }
-
-        }
-
-        }
-
         bind()
     }
 
 
-    private fun returnAction(chapter:Int) : NavDirections{
-        return when (typeMenu) {
+
+    private fun returnAction(chapter:Int) : NavDirections?{
+         when (typeMenu) {
             EXAM -> {
                 viewModel.part = chapter
                 viewModel.clearIrregular()
-                CommonMenuFragmentDirections.actionCommonMenuFragmentToExamFragment(chapter)
+                if ((blockMost50 && chapter == Most50) || (blockPlus50 && chapter == Plus50) || (blockPro && chapter == Pro)){
+                    val myDialogFragment = DumpingDialog()
+                    val manager = (activity as FragmentActivity).supportFragmentManager
+                    myDialogFragment.show(manager, "myDialog")
+                    return null
+                }
+                return CommonMenuFragmentDirections.actionCommonMenuFragmentToExamFragment(chapter)
             }
             IMAGE -> {
-                CommonMenuFragmentDirections.actionCommonMenuFragmentToImagesFragment(chapter)
+                return CommonMenuFragmentDirections.actionCommonMenuFragmentToImagesFragment(chapter)
             }
             else -> {
-                CommonMenuFragmentDirections.actionCommonMenuFragmentToFlashcardFragment(chapter)}
+                return CommonMenuFragmentDirections.actionCommonMenuFragmentToFlashcardFragment(chapter)}
         }
 
     }
@@ -101,18 +106,22 @@ class CommonMenuFragment : Fragment() {
 
         binding.apply {
             most50Button.setOnClickListener {
-                viewModel.part = Most50
                 val action = returnAction(Most50)
-                findNavController().navigate(action)
+                if (action != null) {
+                    findNavController().navigate(action)
+                }
             }
             plus50Button.setOnClickListener {
-                viewModel.part = Most50
                 val action = returnAction(Plus50)
-                findNavController().navigate(action)
+                if (action != null) {
+                    findNavController().navigate(action)
+                }
             }
             proButton.setOnClickListener {
                 val action = returnAction(Pro)
-                findNavController().navigate(action)
+                if (action != null) {
+                    findNavController().navigate(action)
+                }
             }
 
         }

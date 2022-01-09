@@ -17,6 +17,7 @@ import com.rai.irregularverbs.databinding.FragmentExamBinding
 import com.rai.irregularverbs.viewmodels.ExamViewModel
 import com.rai.irregularverbs.viewmodels.ExamViewModelFactory
 import android.app.Activity
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.findNavController
 
 
@@ -60,6 +61,14 @@ class ExamFragment : Fragment() {
         viewModel.checkVisibility.observe(viewLifecycleOwner,   {
             refreshVisibility(it)
         })
+        viewModel.progress.observe(viewLifecycleOwner,   {
+            val fileSize = 300
+            binding.progressBar.max = fileSize
+            binding.progressBar.progress = it
+            val percentage = (it.toDouble() / fileSize * 100)
+            binding.progress.text = "${String.format("%.2f",percentage)}%"
+            binding.level.text = getString(R.string.level,viewModel.part.toString())
+        })
     }
 
 
@@ -94,6 +103,8 @@ class ExamFragment : Fragment() {
                     mcvForm2.setBackgroundColor(getResources().getColor(R.color.primaryDarkColor))
                     mcvForm3.setBackgroundColor(Color.GREEN)
                 }
+
+
             }
         }
     }

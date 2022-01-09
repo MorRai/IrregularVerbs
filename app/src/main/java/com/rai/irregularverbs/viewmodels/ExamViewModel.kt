@@ -27,6 +27,15 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel
         get() = _randomVerb
 
 
+    private val _progress = MutableLiveData<Int>()
+    val progress: LiveData<Int>
+        get() = _progress
+
+    private val _availability = MutableLiveData<Int>()
+    val availability: LiveData<Int>
+        get() = _availability
+
+
 
 
      private fun getRandomVerb(){
@@ -41,7 +50,25 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel
         }
     }
 
-    fun getAvailability(part: Int): Flow<Int> = irregularVerbsDao.getAvailability(part)
+    fun dumpPart() {
+        viewModelScope.launch {
+            irregularVerbsDao.dumpPart(part)
+        }
+    }
+
+    private fun getComplete() {
+        viewModelScope.launch {
+            _progress.value = irregularVerbsDao.getComplete(part)
+        }
+    }
+
+    fun getAvailability(part: Int): LiveData<Int> {
+        val result = MutableLiveData<Int>()
+        viewModelScope.launch {
+            result.value = irregularVerbsDao.getAvailability(part)
+        }
+        return result
+    }
 
     fun getV2orV3(verb: IrregularVerbs): Int{
         return when {
@@ -60,6 +87,7 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel
     fun nextVerb(verb: IrregularVerbs,textCheck:String,editText:String, getV2orV3: Int) {
         refresh(verb,textCheck,editText, getV2orV3)
         getRandomVerb()
+        getComplete()
     }
 
     private fun refresh(irregularVerbs: IrregularVerbs,textCheck:String,editText:String, getV2orV3: Int){
@@ -87,6 +115,7 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel
         _checkVisibility.value = false
         _previousVerb.value = null
         getRandomVerb()
+        getComplete()
     }
 
 

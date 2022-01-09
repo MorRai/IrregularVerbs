@@ -66,6 +66,9 @@ class ListVerbAdapter(private val type: Int) : ListAdapter<IrregularVerbs, Recyc
             if(position % 2 == 0)
             {
                 rootView.setBackgroundResource(R.color.primaryColor)
+                binding.form1.setTextColor(Color.BLACK)
+                binding.form2.setTextColor(Color.BLACK)
+                binding.form3.setTextColor(Color.BLACK)
             } else
             {
                 rootView.setBackgroundResource(R.color.secondaryColor)
@@ -100,9 +103,16 @@ class ListVerbAdapter(private val type: Int) : ListAdapter<IrregularVerbs, Recyc
             val context = rootView.context
             val resId = context.getResources().getIdentifier("${irregularVerbs.form1}_verb", "drawable", context.getPackageName())
             binding.imageView.setImageResource(resId)
-            if(position % 2 == 0)
+            if(position% 2 == 0)
             {
                 rootView.setBackgroundResource(R.color.primaryColor)
+                binding.form1.setTextColor(Color.BLACK)
+                binding.form2.setTextColor(Color.BLACK)
+                binding.form3.setTextColor(Color.BLACK)
+                binding.example1.setTextColor(Color.BLACK)
+                binding.example2.setTextColor(Color.BLACK)
+                binding.example3.setTextColor(Color.BLACK)
+
             } else
             {
                 rootView.setBackgroundResource(R.color.secondaryColor)
@@ -123,6 +133,8 @@ class ListVerbAdapter(private val type: Int) : ListAdapter<IrregularVerbs, Recyc
             }
         }
     }
+
+
 
 
 
