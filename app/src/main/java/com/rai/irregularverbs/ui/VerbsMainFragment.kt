@@ -1,6 +1,7 @@
 package com.rai.irregularverbs.ui
 
 
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,9 +12,18 @@ import com.rai.irregularverbs.constants.MenuType.EXAM
 import com.rai.irregularverbs.constants.MenuType.FLASHCARD
 import com.rai.irregularverbs.constants.MenuType.IMAGE
 import com.rai.irregularverbs.databinding.FragmentVerbsMainBinding
+import android.app.AlarmManager
+import android.content.Context.ALARM_SERVICE
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import com.rai.irregularverbs.receiver.VerbReceiver
+
+import java.util.*
 
 
 class VerbsMainFragment : Fragment() {
+
     private var _binding: FragmentVerbsMainBinding? = null
     private val binding get() = _binding!!
 
@@ -26,6 +36,33 @@ class VerbsMainFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentVerbsMainBinding.inflate(inflater, container, false)
+
+        var calendar = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 22)
+            set(Calendar.MINUTE, 30)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)}
+
+        if (calendar.time < Date()) calendar.add(Calendar.DATE, 1)
+
+        val intent = Intent(
+           this.context,
+            VerbReceiver::class.java
+        )
+        val pendingIntent = PendingIntent.getBroadcast(
+            this.context,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val alarmManager = this.context?.getSystemService(ALARM_SERVICE) as AlarmManager?
+        alarmManager?.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_HALF_DAY,
+            pendingIntent
+        )
         return binding.root
     }
 
@@ -33,6 +70,8 @@ class VerbsMainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bind()
     }
+
+
 
 
 
@@ -56,6 +95,13 @@ class VerbsMainFragment : Fragment() {
             }
         }
     }
+
+
+
+
+
+
+
 
 
 }

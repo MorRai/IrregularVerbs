@@ -3,7 +3,6 @@ package com.rai.irregularverbs.viewmodels
 import androidx.lifecycle.*
 import com.rai.irregularverbs.data.IrregularVerbs
 import com.rai.irregularverbs.data.IrregularVerbsDao
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel() {

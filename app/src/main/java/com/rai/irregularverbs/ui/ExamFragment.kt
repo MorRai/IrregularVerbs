@@ -19,6 +19,7 @@ import com.rai.irregularverbs.viewmodels.ExamViewModelFactory
 import android.app.Activity
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.findNavController
+import java.util.*
 
 
 class ExamFragment : Fragment() {
@@ -77,6 +78,9 @@ class ExamFragment : Fragment() {
         binding.apply {
             val textCheck:String
             form1.text = irregularVerbs.form1
+            val country = Locale.getDefault().country;
+            if (country=="RU") {
+            translate.text = irregularVerbs.ru}
             val getV2orV3 = viewModel.getV2orV3(irregularVerbs)
             if (getV2orV3 == 2){
                 editText.hint= context?.getString(R.string.v2_text)

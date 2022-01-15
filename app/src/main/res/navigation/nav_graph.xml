@@ -48,8 +48,8 @@
     <fragment
         android:id="@+id/imagesFragment"
         android:name="com.rai.irregularverbs.ui.ImagesFragment"
-        android:label="fragment_images"
-        tools:layout="@layout/fragment_images" >
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_images">
         <argument
             android:name="chapter"
             app:argType="integer" />

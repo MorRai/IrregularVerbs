@@ -101,7 +101,7 @@ class ListVerbAdapter(private val type: Int) : ListAdapter<IrregularVerbs, Recyc
             binding.example2.text = irregularVerbs.example2
             binding.example3.text = irregularVerbs.example3
             val context = rootView.context
-            val resId = context.getResources().getIdentifier("${irregularVerbs.form1}_verb", "drawable", context.getPackageName())
+            val resId = context.resources.getIdentifier("${irregularVerbs.form1}_verb", "drawable", context.packageName)
             binding.imageView.setImageResource(resId)
             if(position% 2 == 0)
             {
