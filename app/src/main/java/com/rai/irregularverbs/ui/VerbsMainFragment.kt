@@ -15,7 +15,6 @@ import com.rai.irregularverbs.databinding.FragmentVerbsMainBinding
 import android.app.AlarmManager
 import android.content.Context.ALARM_SERVICE
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import com.rai.irregularverbs.receiver.VerbReceiver
 

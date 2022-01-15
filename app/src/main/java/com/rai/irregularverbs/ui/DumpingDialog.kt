@@ -2,10 +2,8 @@ package com.rai.irregularverbs.ui
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.DialogInterface
 import androidx.fragment.app.DialogFragment
 import android.os.Bundle
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import com.rai.irregularverbs.IrregularVerbsApplication
 import com.rai.irregularverbs.R

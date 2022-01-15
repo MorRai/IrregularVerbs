@@ -15,8 +15,7 @@ import com.rai.irregularverbs.constants.MenuType.LIST
 import com.rai.irregularverbs.data.IrregularVerbs
 import com.rai.irregularverbs.databinding.ImageItemBinding
 import com.rai.irregularverbs.databinding.ListItemBinding
-
-
+import java.util.*
 
 
 class ListVerbAdapter(private val type: Int) : ListAdapter<IrregularVerbs, RecyclerView.ViewHolder>(DiffCallback)  {
@@ -100,6 +99,9 @@ class ListVerbAdapter(private val type: Int) : ListAdapter<IrregularVerbs, Recyc
             binding.example1.text = irregularVerbs.example1
             binding.example2.text = irregularVerbs.example2
             binding.example3.text = irregularVerbs.example3
+            val country = Locale.getDefault().country
+            if (country=="RU") {
+                binding.translate.text = irregularVerbs.ru}
             val context = rootView.context
             val resId = context.resources.getIdentifier("${irregularVerbs.form1}_verb", "drawable", context.packageName)
             binding.imageView.setImageResource(resId)

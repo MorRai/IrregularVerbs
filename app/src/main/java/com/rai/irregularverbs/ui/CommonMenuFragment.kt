@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.coroutineScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.rai.irregularverbs.IrregularVerbsApplication
@@ -19,8 +18,7 @@ import com.rai.irregularverbs.constants.MenuType.IMAGE
 import com.rai.irregularverbs.databinding.FragmentCommonMenuBinding
 import com.rai.irregularverbs.viewmodels.ExamViewModel
 import com.rai.irregularverbs.viewmodels.ExamViewModelFactory
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+
 
 
 class CommonMenuFragment : Fragment() {

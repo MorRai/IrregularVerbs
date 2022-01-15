@@ -17,7 +17,6 @@ import com.rai.irregularverbs.databinding.FragmentExamBinding
 import com.rai.irregularverbs.viewmodels.ExamViewModel
 import com.rai.irregularverbs.viewmodels.ExamViewModelFactory
 import android.app.Activity
-import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.findNavController
 import java.util.*
 
@@ -78,7 +77,7 @@ class ExamFragment : Fragment() {
         binding.apply {
             val textCheck:String
             form1.text = irregularVerbs.form1
-            val country = Locale.getDefault().country;
+            val country = Locale.getDefault().country
             if (country=="RU") {
             translate.text = irregularVerbs.ru}
             val getV2orV3 = viewModel.getV2orV3(irregularVerbs)
@@ -95,16 +94,16 @@ class ExamFragment : Fragment() {
                 //hide keyboard
                 val imm: InputMethodManager =
                     context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(editText.getWindowToken(), 0)
+                imm.hideSoftInputFromWindow(editText.windowToken, 0)
 
                 viewModel.updateEditText(editText.text.toString())
                 viewModel.nextVerb(irregularVerbs,textCheck,editText.text.toString(),getV2orV3)
                 editText.setText("")
                 if (getV2orV3 == 2){
                     mcvForm2.setBackgroundColor(Color.GREEN)
-                    mcvForm3.setBackgroundColor(getResources().getColor(R.color.primaryDarkColor))}
+                    mcvForm3.setBackgroundColor(resources.getColor(R.color.primaryDarkColor))}
                 else {
-                    mcvForm2.setBackgroundColor(getResources().getColor(R.color.primaryDarkColor))
+                    mcvForm2.setBackgroundColor(resources.getColor(R.color.primaryDarkColor))
                     mcvForm3.setBackgroundColor(Color.GREEN)
                 }
 
@@ -116,7 +115,7 @@ class ExamFragment : Fragment() {
 
     private fun refresh(irregularVerbs: IrregularVerbs){
         binding.answerText.text =getString(R.string.text_answer,viewModel.editText)
-        binding.answerText.paintFlags =  binding.answerText.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG
+        binding.answerText.paintFlags =  binding.answerText.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 
         binding.answerForm1.text = irregularVerbs.form1
         binding.answerForm2.text = irregularVerbs.form2

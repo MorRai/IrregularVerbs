@@ -23,7 +23,7 @@ class FlashcardFragment : Fragment() {
     private var _binding: FragmentFlashcardBinding? = null
     private val binding get() = _binding!!
 
-    private var charpter: Int = 0
+    private var chapter: Int = 0
 
     private lateinit var recyclerView: RecyclerView
 
@@ -39,7 +39,7 @@ class FlashcardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        charpter = ImagesFragmentArgs.fromBundle(requireArguments()).chapter
+        chapter = ImagesFragmentArgs.fromBundle(requireArguments()).chapter
         // Inflate the layout for this fragment
         _binding = FragmentFlashcardBinding.inflate(inflater, container, false)
         return binding.root
@@ -52,7 +52,7 @@ class FlashcardFragment : Fragment() {
         val flashcardAdapter = FlashcardAdapter()
         recyclerView.adapter = flashcardAdapter
         lifecycle.coroutineScope.launch {
-            viewModel.fullPart(charpter).collect {
+            viewModel.fullPart(chapter).collect {
                 flashcardAdapter.submitList(it)
             }
         }

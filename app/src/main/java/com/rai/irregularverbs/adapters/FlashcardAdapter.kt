@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.rai.irregularverbs.data.IrregularVerbs
 import com.rai.irregularverbs.databinding.FlashcardItemBinding
+import java.util.*
 
 class FlashcardAdapter : ListAdapter<IrregularVerbs, FlashcardAdapter.FlashcardViewHolder>(DiffCallback) {
 
@@ -16,15 +17,13 @@ class FlashcardAdapter : ListAdapter<IrregularVerbs, FlashcardAdapter.FlashcardV
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FlashcardViewHolder {
-        val viewHolder = FlashcardViewHolder(
+        return FlashcardViewHolder(
             FlashcardItemBinding.inflate(
                 LayoutInflater.from( parent.context),
                 parent,
                 false
             )
         )
-
-        return viewHolder
     }
 
      class FlashcardViewHolder(private var binding: FlashcardItemBinding) :
@@ -39,6 +38,9 @@ class FlashcardAdapter : ListAdapter<IrregularVerbs, FlashcardAdapter.FlashcardV
             binding.backSide.form2.text = irregularVerbs.form2
             binding.backSide.form3.text = irregularVerbs.form3
             binding.frontSide.form1.text = irregularVerbs.form1
+            val country = Locale.getDefault().country
+            if (country=="RU") {
+                binding.backSide.translate.text = irregularVerbs.ru}
         }
         init {
             backSide.setOnClickListener {

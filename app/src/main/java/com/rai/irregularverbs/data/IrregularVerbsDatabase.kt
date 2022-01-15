@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-@Database(entities = arrayOf(IrregularVerbs::class), version = 1, exportSchema = false)
+@Database(entities = [IrregularVerbs::class], version = 1, exportSchema = false)
 abstract class IrregularVerbsDatabase: RoomDatabase() {
     abstract fun irregularVerbsDao(): IrregularVerbsDao
 

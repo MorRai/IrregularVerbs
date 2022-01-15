@@ -20,6 +20,17 @@
             android:layout_height="240dp">
 
             <TextView
+                android:id="@+id/translate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ListTextStyle"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                tools:text="translate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
                 android:id="@+id/form1"
                 style="@style/ImageTextStyle"
                 android:layout_width="wrap_content"
