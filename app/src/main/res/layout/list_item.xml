@@ -1,32 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:layout_height="wrap_content">
 
 
     <TextView
         android:id="@+id/form1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
         style="@style/ListTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@+id/form2"
+        app:layout_constraintEnd_toStartOf="@+id/form2"
+        app:layout_constraintStart_toStartOf="parent"
         tools:text="Form1" />
 
     <TextView
         android:id="@+id/form2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         style="@style/ListTextStyle"
-        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/form3"
+        app:layout_constraintStart_toEndOf="@+id/form1"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Form2" />
 
     <TextView
         android:id="@+id/form3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         style="@style/ListTextStyle"
-        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@+id/form2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/form2"
         tools:text="Form3" />
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/translate"
+        style="@style/ListTextStyle"
+        android:textStyle="normal|italic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/form1"
+        app:layout_constraintStart_toStartOf="@+id/form1"
+        app:layout_constraintTop_toBottomOf="@+id/form1"
+        tools:text="translate" />
+</androidx.constraintlayout.widget.ConstraintLayout>

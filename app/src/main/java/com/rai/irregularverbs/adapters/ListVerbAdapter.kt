@@ -59,21 +59,25 @@ class ListVerbAdapter(private val type: Int) : ListAdapter<IrregularVerbs, Recyc
 
         fun bind(irregularVerbs: IrregularVerbs, position: Int) {
             binding.form1.text = irregularVerbs.form1
-            //binding.form1.setTextColor()
             binding.form2.text = irregularVerbs.form2
             binding.form3.text = irregularVerbs.form3
+            val country = Locale.getDefault().country
+            if (country=="RU") {
+                binding.translate.text = irregularVerbs.ru}
             if(position % 2 == 0)
             {
                 rootView.setBackgroundResource(R.color.primaryColor)
                 binding.form1.setTextColor(Color.BLACK)
                 binding.form2.setTextColor(Color.BLACK)
                 binding.form3.setTextColor(Color.BLACK)
+                binding.translate.setTextColor(R.color.secondaryColor)
             } else
             {
                 rootView.setBackgroundResource(R.color.secondaryColor)
                 binding.form1.setTextColor(Color.parseColor("#feea15"))
                 binding.form2.setTextColor(Color.parseColor("#feea15"))
                 binding.form3.setTextColor(Color.parseColor("#feea15"))
+                binding.translate.setTextColor(Color.parseColor("#fffa2c"))
             }
         }
 
@@ -114,6 +118,7 @@ class ListVerbAdapter(private val type: Int) : ListAdapter<IrregularVerbs, Recyc
                 binding.example1.setTextColor(Color.BLACK)
                 binding.example2.setTextColor(Color.BLACK)
                 binding.example3.setTextColor(Color.BLACK)
+                binding.translate.setTextColor(Color.BLACK)
 
             } else
             {
@@ -124,6 +129,7 @@ class ListVerbAdapter(private val type: Int) : ListAdapter<IrregularVerbs, Recyc
                 binding.example1.setTextColor(Color.parseColor("#feea15"))
                 binding.example2.setTextColor(Color.parseColor("#feea15"))
                 binding.example3.setTextColor(Color.parseColor("#feea15"))
+                binding.translate.setTextColor(Color.parseColor("#feea15"))
             }
         }
 
