@@ -1,41 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scroll"
     android:background="@color/greyBack"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:paddingLeft="64dp"
-        android:paddingRight="64dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/most50_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             style="@style/MenuTextStyle"
-            android:text="@string/most50" />
+            android:layout_width="283dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/most50"
+            app:layout_constraintBottom_toTopOf="@+id/plus50_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/plus50_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             style="@style/MenuTextStyle"
-            android:text="@string/plus50" />
+            android:layout_width="283dp"
+            android:layout_height="wrap_content"
+            android:text="@string/plus50"
+            app:layout_constraintBottom_toTopOf="@+id/pro_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/most50_button" />
 
         <Button
             android:id="@+id/pro_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             style="@style/MenuTextStyle"
-            android:text="@string/pro" />
+            android:layout_width="283dp"
+            android:layout_height="wrap_content"
+            android:text="@string/pro"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/plus50_button" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -13,6 +13,9 @@ import com.rai.irregularverbs.viewmodels.ExamViewModelFactory
 
 class DumpingDialog: DialogFragment() {
 
+
+
+
     private val viewModel: ExamViewModel by activityViewModels {
         ExamViewModelFactory(
             (activity?.application as IrregularVerbsApplication).database.irregularVerbsDao()
@@ -24,8 +27,9 @@ class DumpingDialog: DialogFragment() {
         return builder
             .setTitle(R.string.app_name)
             .setMessage(R.string.text_dialog)
-            .setPositiveButton(R.string.ok) { dialog, id ->
+            .setPositiveButton(R.string.ok) { _, _ ->
                 viewModel.dumpPart()
+                viewModel.getAvailability()
             }
             .setNegativeButton(R.string.cancel, null)
             .create()

@@ -4,35 +4,44 @@ import androidx.lifecycle.*
 import com.rai.irregularverbs.data.IrregularVerbs
 import com.rai.irregularverbs.data.IrregularVerbsDao
 import kotlinx.coroutines.launch
+import com.rai.irregularverbs.constants.Charpter.Most50
+import com.rai.irregularverbs.constants.Charpter.Plus50
+import com.rai.irregularverbs.constants.Charpter.Pro
 
 class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel() {
     var part: Int = 0
     var editText: String = ""
 
-
     private val _checkVisibility = MutableLiveData<Boolean>()
     val checkVisibility: LiveData<Boolean>
         get() = _checkVisibility
-
 
     private val _previousVerb = MutableLiveData<IrregularVerbs?>()
     val previousVerb: LiveData<IrregularVerbs?>
         get() = _previousVerb
 
-
-
     private val _randomVerb = MutableLiveData<IrregularVerbs?>()
     val randomVerb: LiveData<IrregularVerbs?>
         get() = _randomVerb
-
 
     private val _progress = MutableLiveData<Int>()
     val progress: LiveData<Int>
         get() = _progress
 
-    private val _availability = MutableLiveData<Int>()
-    val availability: LiveData<Int>
-        get() = _availability
+
+    private val _blockMost50 = MutableLiveData<Boolean>()
+    val blockMost50: LiveData<Boolean>
+        get() = _blockMost50
+
+    private val _blockPlus50 = MutableLiveData<Boolean>()
+    val blockPlus50: LiveData<Boolean>
+        get() = _blockPlus50
+
+    private val _blockPro = MutableLiveData<Boolean>()
+    val blockPro: LiveData<Boolean>
+        get() = _blockPro
+
+
 
 
 
@@ -61,12 +70,12 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel
         }
     }
 
-    fun getAvailability(part: Int): LiveData<Int> {
-        val result = MutableLiveData<Int>()
+    fun getAvailability() {
         viewModelScope.launch {
-            result.value = irregularVerbsDao.getAvailability(part)
+            _blockMost50.value = irregularVerbsDao.getAvailability(Most50) == 0
+            _blockPlus50.value = irregularVerbsDao.getAvailability(Plus50)== 0
+            _blockPro.value = irregularVerbsDao.getAvailability(Pro)== 0
         }
-        return result
     }
 
     fun getV2orV3(verb: IrregularVerbs): Int{
@@ -103,6 +112,13 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel
         }else{
             _checkVisibility.value = true
             _previousVerb.value = irregularVerbs
+            if (getV2orV3 == 2) {
+                val newIrregularVerbs = irregularVerbs.copy(numCorrectV2 = irregularVerbs.numCorrectV2 - 1)
+                updateItem(newIrregularVerbs)
+            }else{
+                val newIrregularVerbs = irregularVerbs.copy(numCorrectV3 = irregularVerbs.numCorrectV3 - 1)
+                updateItem(newIrregularVerbs)
+            }
         }
     }
 
