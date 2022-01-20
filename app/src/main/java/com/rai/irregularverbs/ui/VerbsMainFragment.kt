@@ -37,7 +37,7 @@ class VerbsMainFragment : Fragment() {
         _binding = FragmentVerbsMainBinding.inflate(inflater, container, false)
 
         var calendar = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 22)
+            set(Calendar.HOUR_OF_DAY, 19)
             set(Calendar.MINUTE, 30)
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)}

@@ -9,8 +9,10 @@ import android.os.Build
 import android.app.*
 import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
+import androidx.lifecycle.viewModelScope
 import com.rai.irregularverbs.R
 import com.rai.irregularverbs.ui.MainActivity
+import kotlinx.coroutines.launch
 
 
 class VerbReceiver : BroadcastReceiver() {
@@ -29,14 +31,15 @@ class VerbReceiver : BroadcastReceiver() {
             PendingIntent.FLAG_UPDATE_CURRENT
         ) //getting the pendingIntent
 
+
+
         val notification = NotificationCompat.Builder(context).apply {
-            setContentTitle("Demo App Notification")
-            setContentText("New Notification From Demo App..")
-            setTicker("New Message Alert!")
-            setSmallIcon(R.drawable.be_verb)
+            setContentTitle(context.getString(R.string.content_title))
+           // setContentText("be/???/???")
+            setSmallIcon(R.mipmap.ic_launcher)
             setLargeIcon(
                 BitmapFactory.decodeResource(context.resources,
-                R.drawable.be_verb))
+                    R.mipmap.ic_launcher))
             setAutoCancel(true)
             setContentIntent(pendingIntent)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

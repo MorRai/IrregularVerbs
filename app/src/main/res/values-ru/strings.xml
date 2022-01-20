@@ -21,4 +21,5 @@
     <string name="v3_text">Past Participle(V3)</string>
     <string name="text_error">Ошибка! Правильный ответ:</string>
     <string name="text_answer">" \"%1$s\""</string>
+    <string name="content_title">Пришло время повторить!</string>
 </resources>
