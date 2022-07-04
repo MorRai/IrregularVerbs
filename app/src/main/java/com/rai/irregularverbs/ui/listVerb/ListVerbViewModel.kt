@@ -7,17 +7,15 @@ import com.rai.irregularverbs.data.IrregularVerbsDao
 import kotlinx.coroutines.flow.Flow
 
 
-class ListVerbViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel() {
+class ListVerbViewModel(private val irregularVerbsDao: IrregularVerbsDao) : ViewModel() {
 
     fun fullPart(part: Int): Flow<List<IrregularVerbs>> = irregularVerbsDao.getPart(part)
+
     fun fullAll(): Flow<List<IrregularVerbs>> = irregularVerbsDao.getAll()
-
-
-
 }
 
 class ListVerbViewModelFactory(
-    private val irregularVerbsDao: IrregularVerbsDao
+    private val irregularVerbsDao: IrregularVerbsDao,
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ListVerbViewModel::class.java)) {

@@ -9,10 +9,8 @@ import android.os.Build
 import android.app.*
 import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
-import androidx.lifecycle.viewModelScope
 import com.rai.irregularverbs.R
 import com.rai.irregularverbs.ui.MainActivity
-import kotlinx.coroutines.launch
 
 
 class VerbReceiver : BroadcastReceiver() {

@@ -30,7 +30,6 @@ interface IrregularVerbsDao {
     @Query("SELECT Count(id) FROM verbs WHERE part = :part and (numCorrectV2<3 or numCorrectV3<3)")
     suspend fun getAvailability(part: Int): Int
 
-
     @Query("Update verbs Set numCorrectV2 = 0,numCorrectV3=0 WHERE part = :part")
     suspend fun dumpPart(part: Int)
 

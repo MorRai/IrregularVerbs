@@ -13,9 +13,6 @@ import com.rai.irregularverbs.viewmodels.ExamViewModelFactory
 
 class DumpingDialog: DialogFragment() {
 
-
-
-
     private val viewModel: ExamViewModel by activityViewModels {
         ExamViewModelFactory(
             (activity?.application as IrregularVerbsApplication).database.irregularVerbsDao()

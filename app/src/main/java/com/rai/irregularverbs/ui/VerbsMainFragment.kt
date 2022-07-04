@@ -24,19 +24,17 @@ import java.util.*
 class VerbsMainFragment : Fragment() {
 
     private var _binding: FragmentVerbsMainBinding? = null
-    private val binding get() = _binding!!
-
-
-
+    private val binding
+        get() = requireNotNull(_binding) {
+            "View was destroyed"
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-        _binding = FragmentVerbsMainBinding.inflate(inflater, container, false)
 
-        var calendar = Calendar.getInstance().apply {
+        val calendar = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, 19)
             set(Calendar.MINUTE, 30)
             set(Calendar.SECOND, 0)
@@ -52,7 +50,7 @@ class VerbsMainFragment : Fragment() {
             this.context,
             0,
             intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
         val alarmManager = this.context?.getSystemService(ALARM_SERVICE) as AlarmManager?
@@ -62,15 +60,15 @@ class VerbsMainFragment : Fragment() {
             AlarmManager.INTERVAL_HALF_DAY,
             pendingIntent
         )
-        return binding.root
+        return FragmentVerbsMainBinding.inflate(inflater, container, false)
+            .also { _binding = it }
+            .root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bind()
     }
-
-
 
 
 
@@ -94,13 +92,6 @@ class VerbsMainFragment : Fragment() {
             }
         }
     }
-
-
-
-
-
-
-
 
 
 }

@@ -1,4 +1,4 @@
-package com.rai.irregularverbs.ui
+package com.rai.irregularverbs.ui.listVerb
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.rai.irregularverbs.IrregularVerbsApplication
 import com.rai.irregularverbs.adapters.ListVerbAdapter
 import com.rai.irregularverbs.constants.MenuType.LIST
@@ -21,8 +20,11 @@ import kotlinx.coroutines.flow.collect
 
 class ListVerbFragment : Fragment() {
     private var _binding: FragmentListVerbBinding? = null
-    private val binding get() = _binding!!
-    private lateinit var recyclerView: RecyclerView
+    private val binding
+        get() = requireNotNull(_binding) {
+            "View was destroyed"
+        }
+
 
     private val viewModel: ListVerbViewModel by activityViewModels {
         ListVerbViewModelFactory(
@@ -34,20 +36,21 @@ class ListVerbFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-        _binding = FragmentListVerbBinding.inflate(inflater, container, false)
-        return binding.root
+        return FragmentListVerbBinding.inflate(inflater, container, false)
+            .also { _binding = it }
+            .root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView = binding.recyclerView
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val listVerbAdapter = ListVerbAdapter(LIST)
-        recyclerView.adapter = listVerbAdapter
-        lifecycle.coroutineScope.launch {
-            viewModel.fullAll().collect {
-                listVerbAdapter.submitList(it)
+        with(binding) {
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            val listVerbAdapter = ListVerbAdapter(LIST)
+            recyclerView.adapter = listVerbAdapter
+            lifecycle.coroutineScope.launch {
+                viewModel.fullAll().collect {
+                    listVerbAdapter.submitList(it)
+                }
             }
         }
     }

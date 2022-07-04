@@ -65,7 +65,7 @@
     </fragment>
     <fragment
         android:id="@+id/listVerbFragment"
-        android:name="com.rai.irregularverbs.ui.ListVerbFragment"
+        android:name="com.rai.irregularverbs.ui.listVerb.ListVerbFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_list_verb" />
 </navigation>

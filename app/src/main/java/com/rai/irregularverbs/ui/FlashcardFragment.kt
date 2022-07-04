@@ -21,11 +21,12 @@ import kotlinx.coroutines.launch
 
 class FlashcardFragment : Fragment() {
     private var _binding: FragmentFlashcardBinding? = null
-    private val binding get() = _binding!!
+    private val binding
+        get() = requireNotNull(_binding) {
+            "View was destroyed"
+        }
 
     private var chapter: Int = 0
-
-    private lateinit var recyclerView: RecyclerView
 
     private val viewModel: ListVerbViewModel by activityViewModels {
         ListVerbViewModelFactory(
@@ -40,23 +41,25 @@ class FlashcardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         chapter = ImagesFragmentArgs.fromBundle(requireArguments()).chapter
-        // Inflate the layout for this fragment
-        _binding = FragmentFlashcardBinding.inflate(inflater, container, false)
-        return binding.root
+        return FragmentFlashcardBinding.inflate(inflater, container, false)
+            .also { _binding = it }
+            .root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView = binding.recyclerView
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val flashcardAdapter = FlashcardAdapter()
-        recyclerView.adapter = flashcardAdapter
-        lifecycle.coroutineScope.launch {
-            viewModel.fullPart(chapter).collect {
-                flashcardAdapter.submitList(it)
+        with(binding) {
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            val flashcardAdapter = FlashcardAdapter()
+            recyclerView.adapter = flashcardAdapter
+            lifecycle.coroutineScope.launch {
+                viewModel.fullPart(chapter).collect {
+                    flashcardAdapter.submitList(it)
+                }
             }
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

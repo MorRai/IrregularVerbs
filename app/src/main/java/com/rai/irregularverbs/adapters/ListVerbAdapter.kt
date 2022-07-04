@@ -1,6 +1,7 @@
 package com.rai.irregularverbs.adapters
 
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -18,12 +19,13 @@ import com.rai.irregularverbs.databinding.ListItemBinding
 import java.util.*
 
 
-class ListVerbAdapter(private val type: Int) : ListAdapter<IrregularVerbs, RecyclerView.ViewHolder>(DiffCallback)  {
+class ListVerbAdapter(private val type: Int) :
+    ListAdapter<IrregularVerbs, RecyclerView.ViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
 
-        viewType: Int
+        viewType: Int,
     ): RecyclerView.ViewHolder {
         return when (type) {
             IMAGE -> ImageViewHolder.from(parent)
@@ -31,48 +33,43 @@ class ListVerbAdapter(private val type: Int) : ListAdapter<IrregularVerbs, Recyc
             else -> throw ClassCastException("Unknown viewType $type")
         }
 
-
-
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ListVerbViewHolder -> {
                 val item = getItem(position)
-                holder.bind(item,position)
+                holder.bind(item, position)
             }
             is ImageViewHolder -> {
                 val item = getItem(position)
-                holder.bind(item,position)
+                holder.bind(item, position)
             }
-
         }
-
     }
 
-
     class ListVerbViewHolder(
-        private var binding: ListItemBinding
-    ): RecyclerView.ViewHolder(binding.root) {
+        private var binding: ListItemBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         private val rootView = binding.root
 
+        @SuppressLint("ResourceAsColor")
         fun bind(irregularVerbs: IrregularVerbs, position: Int) {
             binding.form1.text = irregularVerbs.form1
             binding.form2.text = irregularVerbs.form2
             binding.form3.text = irregularVerbs.form3
             val country = Locale.getDefault().country
-            if (country=="RU") {
-                binding.translate.text = irregularVerbs.ru}
-            if(position % 2 == 0)
-            {
+            if (country == "RU") {
+                binding.translate.text = irregularVerbs.ru
+            }
+            if (position % 2 == 0) {
                 rootView.setBackgroundResource(R.color.primaryColor)
                 binding.form1.setTextColor(Color.BLACK)
                 binding.form2.setTextColor(Color.BLACK)
                 binding.form3.setTextColor(Color.BLACK)
                 binding.translate.setTextColor(R.color.secondaryColor)
-            } else
-            {
+            } else {
                 rootView.setBackgroundResource(R.color.secondaryColor)
                 binding.form1.setTextColor(Color.parseColor("#feea15"))
                 binding.form2.setTextColor(Color.parseColor("#feea15"))
@@ -91,12 +88,12 @@ class ListVerbAdapter(private val type: Int) : ListAdapter<IrregularVerbs, Recyc
     }
 
     class ImageViewHolder(
-        private var binding: ImageItemBinding
-    ): RecyclerView.ViewHolder(binding.root) {
+        private var binding: ImageItemBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         private val rootView = binding.root
 
-        fun bind(irregularVerbs: IrregularVerbs,position: Int) {
+        fun bind(irregularVerbs: IrregularVerbs, position: Int) {
             binding.form1.text = irregularVerbs.form1
             binding.form2.text = irregularVerbs.form2
             binding.form3.text = irregularVerbs.form3
@@ -104,13 +101,15 @@ class ListVerbAdapter(private val type: Int) : ListAdapter<IrregularVerbs, Recyc
             binding.example2.text = irregularVerbs.example2
             binding.example3.text = irregularVerbs.example3
             val country = Locale.getDefault().country
-            if (country=="RU") {
-                binding.translate.text = irregularVerbs.ru}
+            if (country == "RU") {
+                binding.translate.text = irregularVerbs.ru
+            }
             val context = rootView.context
-            val resId = context.resources.getIdentifier("${irregularVerbs.form1}_verb", "drawable", context.packageName)
+            val resId = context.resources.getIdentifier("${irregularVerbs.form1}_verb",
+                "drawable",
+                context.packageName)
             binding.imageView.setImageResource(resId)
-            if(position% 2 == 0)
-            {
+            if (position % 2 == 0) {
                 rootView.setBackgroundResource(R.color.primaryColor)
                 binding.form1.setTextColor(Color.BLACK)
                 binding.form2.setTextColor(Color.BLACK)
@@ -120,8 +119,7 @@ class ListVerbAdapter(private val type: Int) : ListAdapter<IrregularVerbs, Recyc
                 binding.example3.setTextColor(Color.BLACK)
                 binding.translate.setTextColor(Color.BLACK)
 
-            } else
-            {
+            } else {
                 rootView.setBackgroundResource(R.color.secondaryColor)
                 binding.form1.setTextColor(Color.parseColor("#feea15"))
                 binding.form2.setTextColor(Color.parseColor("#feea15"))
@@ -143,21 +141,23 @@ class ListVerbAdapter(private val type: Int) : ListAdapter<IrregularVerbs, Recyc
     }
 
 
-
-
-
     companion object {
         private val DiffCallback = object : DiffUtil.ItemCallback<IrregularVerbs>() {
-            override fun areItemsTheSame(oldItem: IrregularVerbs, newItem: IrregularVerbs): Boolean {
+            override fun areItemsTheSame(
+                oldItem: IrregularVerbs,
+                newItem: IrregularVerbs,
+            ): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: IrregularVerbs, newItem: IrregularVerbs): Boolean {
+            override fun areContentsTheSame(
+                oldItem: IrregularVerbs,
+                newItem: IrregularVerbs,
+            ): Boolean {
                 return oldItem == newItem
             }
         }
     }
-
 
 
 }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rai.irregularverbs.IrregularVerbsApplication
 import com.rai.irregularverbs.adapters.ListVerbAdapter
 import com.rai.irregularverbs.constants.MenuType.IMAGE
+import com.rai.irregularverbs.databinding.FragmentFlashcardBinding
 import com.rai.irregularverbs.databinding.FragmentImagesBinding
 import com.rai.irregularverbs.viewmodels.ListVerbViewModel
 import com.rai.irregularverbs.viewmodels.ListVerbViewModelFactory
@@ -23,11 +24,12 @@ import kotlinx.coroutines.launch
 
 class ImagesFragment : Fragment() {
     private var _binding: FragmentImagesBinding? = null
-    private val binding get() = _binding!!
+    private val binding
+        get() = requireNotNull(_binding) {
+            "View was destroyed"
+        }
 
     private var chapter: Int = 0
-
-    private lateinit var recyclerView: RecyclerView
 
     private val viewModel: ListVerbViewModel by activityViewModels {
         ListVerbViewModelFactory(
@@ -41,20 +43,21 @@ class ImagesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         chapter = ImagesFragmentArgs.fromBundle(requireArguments()).chapter
-        // Inflate the layout for this fragment
-        _binding = FragmentImagesBinding.inflate(inflater, container, false)
-        return binding.root
+        return FragmentImagesBinding.inflate(inflater, container, false)
+            .also { _binding = it }
+            .root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView = binding.recyclerView
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val listVerbAdapter = ListVerbAdapter(IMAGE)
-        recyclerView.adapter = listVerbAdapter
-        lifecycle.coroutineScope.launch {
-            viewModel.fullPart(chapter).collect {
-                listVerbAdapter.submitList(it)
+        with(binding) {
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            val listVerbAdapter = ListVerbAdapter(IMAGE)
+            recyclerView.adapter = listVerbAdapter
+            lifecycle.coroutineScope.launch {
+                viewModel.fullPart(chapter).collect {
+                    listVerbAdapter.submitList(it)
+                }
             }
         }
     }

@@ -133,8 +133,6 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel
         getComplete()
     }
 
-
-
 }
 
 

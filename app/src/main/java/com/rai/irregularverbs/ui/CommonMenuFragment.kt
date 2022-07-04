@@ -26,7 +26,10 @@ import com.rai.irregularverbs.viewmodels.ExamViewModelFactory
 class CommonMenuFragment : Fragment() {
 
     private var _binding: FragmentCommonMenuBinding? = null
-    private val binding get() = _binding!!
+    private val binding
+        get() = requireNotNull(_binding) {
+            "View was destroyed"
+        }
     private var typeMenu: Int = 0
 
     private var blockMost50 = false
@@ -39,7 +42,6 @@ class CommonMenuFragment : Fragment() {
             (activity?.application as IrregularVerbsApplication).database.irregularVerbsDao()
         )
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,26 +62,52 @@ class CommonMenuFragment : Fragment() {
         if (typeMenu == EXAM) {
             viewModel.getAvailability()
             val mImage = ResourcesCompat.getDrawable(resources, R.drawable.completed, null)
-            viewModel.blockMost50.observe(viewLifecycleOwner,   {
-                if (it){binding.most50Button.setCompoundDrawablesWithIntrinsicBounds(mImage, null, null, null)}
-                else{binding.most50Button.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)}
+            viewModel.blockMost50.observe(viewLifecycleOwner) {
+                if (it) {
+                    binding.most50Button.setCompoundDrawablesWithIntrinsicBounds(mImage,
+                        null,
+                        null,
+                        null)
+                } else {
+                    binding.most50Button.setCompoundDrawablesWithIntrinsicBounds(null,
+                        null,
+                        null,
+                        null)
+                }
                 blockMost50 = it
-            })
-            viewModel.blockPlus50.observe(viewLifecycleOwner,   {
-                if (it){binding.plus50Button.setCompoundDrawablesWithIntrinsicBounds(mImage, null, null, null)}
-                else{binding.plus50Button.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)}
+            }
+            viewModel.blockPlus50.observe(viewLifecycleOwner) {
+                if (it) {
+                    binding.plus50Button.setCompoundDrawablesWithIntrinsicBounds(mImage,
+                        null,
+                        null,
+                        null)
+                } else {
+                    binding.plus50Button.setCompoundDrawablesWithIntrinsicBounds(null,
+                        null,
+                        null,
+                        null)
+                }
                 blockPlus50 = it
-            })
-            viewModel.blockPro.observe(viewLifecycleOwner,   {
-                if (it){binding.proButton.setCompoundDrawablesWithIntrinsicBounds(mImage, null, null, null)}
-                else{binding.proButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)}
+            }
+            viewModel.blockPro.observe(viewLifecycleOwner) {
+                if (it) {
+                    binding.proButton.setCompoundDrawablesWithIntrinsicBounds(mImage,
+                        null,
+                        null,
+                        null)
+                } else {
+                    binding.proButton.setCompoundDrawablesWithIntrinsicBounds(null,
+                        null,
+                        null,
+                        null)
+                }
                 blockPro = it
-            })
+            }
         }
         bind()
 
     }
-
 
 
     private fun returnAction(chapter:Int) : NavDirections?{
@@ -104,7 +132,6 @@ class CommonMenuFragment : Fragment() {
         }
 
     }
-
 
 
     private fun bind() {

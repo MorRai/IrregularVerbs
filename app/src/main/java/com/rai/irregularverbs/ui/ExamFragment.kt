@@ -1,6 +1,7 @@
 package com.rai.irregularverbs.ui
 
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
@@ -23,7 +24,10 @@ import java.util.*
 
 class ExamFragment : Fragment() {
     private var _binding: FragmentExamBinding? = null
-    private val binding get() = _binding!!
+    private val binding
+        get() = requireNotNull(_binding) {
+            "View was destroyed"
+        }
 
 
     private val viewModel: ExamViewModel by activityViewModels {
@@ -43,32 +47,33 @@ class ExamFragment : Fragment() {
     }
 
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.randomVerb.observe(viewLifecycleOwner, {
+        viewModel.randomVerb.observe(viewLifecycleOwner) {
             if (it != null) {
                 bind(it)
-            }else{
+            } else {
                 findNavController().popBackStack()
             }
 
-        })
-        viewModel.previousVerb.observe(viewLifecycleOwner,   {
+        }
+        viewModel.previousVerb.observe(viewLifecycleOwner) {
             if (it != null) {
                 refresh(it)
             }
-        })
-        viewModel.checkVisibility.observe(viewLifecycleOwner,   {
+        }
+        viewModel.checkVisibility.observe(viewLifecycleOwner) {
             refreshVisibility(it)
-        })
-        viewModel.progress.observe(viewLifecycleOwner,   {
+        }
+        viewModel.progress.observe(viewLifecycleOwner) {
             val fileSize = 300
             binding.progressBar.max = fileSize
             binding.progressBar.progress = it
             val percentage = (it.toDouble() / fileSize * 100)
-            binding.progress.text = "${String.format("%.2f",percentage)}%"
-            binding.level.text = getString(R.string.level,viewModel.part.toString())
-        })
+            binding.progress.text = "${String.format("%.2f", percentage)}%"
+            binding.level.text = getString(R.string.level, viewModel.part.toString())
+        }
     }
 
 
@@ -106,8 +111,6 @@ class ExamFragment : Fragment() {
                     mcvForm2.setBackgroundColor(resources.getColor(R.color.primaryDarkColor))
                     mcvForm3.setBackgroundColor(Color.GREEN)
                 }
-
-
             }
         }
     }
@@ -143,7 +146,6 @@ class ExamFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 
 
 }

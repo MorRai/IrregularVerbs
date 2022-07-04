@@ -12,10 +12,8 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 @Database(entities = [IrregularVerbs::class], version = 1, exportSchema = false)
-abstract class IrregularVerbsDatabase: RoomDatabase() {
+abstract class IrregularVerbsDatabase : RoomDatabase() {
     abstract fun irregularVerbsDao(): IrregularVerbsDao
-
-
 
     private class IrregularVerbsDatabaseCallback(
         private val scope: CoroutineScope,
@@ -43,18 +41,15 @@ abstract class IrregularVerbsDatabase: RoomDatabase() {
                 return tempInstance
             }
             synchronized(this) {
-                 val instance = Room.databaseBuilder(context, IrregularVerbsDatabase::class.java, "verb_database")
+                val instance = Room.databaseBuilder(context,
+                    IrregularVerbsDatabase::class.java,
+                    "verb_database")
                     .addCallback(IrregularVerbsDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
                 return instance
             }
         }
-
-
-
-
-
 
     }
 
