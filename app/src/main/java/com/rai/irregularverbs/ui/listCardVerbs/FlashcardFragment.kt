@@ -1,22 +1,18 @@
-package com.rai.irregularverbs.ui
+package com.rai.irregularverbs.ui.listCardVerbs
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.rai.irregularverbs.IrregularVerbsApplication
 import com.rai.irregularverbs.adapters.FlashcardAdapter
 import com.rai.irregularverbs.databinding.FragmentFlashcardBinding
 import com.rai.irregularverbs.viewmodels.ListVerbViewModel
-import com.rai.irregularverbs.viewmodels.ListVerbViewModelFactory
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class FlashcardFragment : Fragment() {
@@ -28,19 +24,14 @@ class FlashcardFragment : Fragment() {
 
     private var chapter: Int = 0
 
-    private val viewModel: ListVerbViewModel by activityViewModels {
-        ListVerbViewModelFactory(
-            (activity?.application as IrregularVerbsApplication).database.irregularVerbsDao()
-        )
-    }
-
+    private val viewModel by viewModel<ListVerbViewModel>()
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        chapter = ImagesFragmentArgs.fromBundle(requireArguments()).chapter
+        chapter = FlashcardFragmentArgs.fromBundle(requireArguments()).chapter
         return FragmentFlashcardBinding.inflate(inflater, container, false)
             .also { _binding = it }
             .root

@@ -44,6 +44,8 @@ dependencies {
     val lifecycle_version = "2.4.1"
     val work_version = "2.7.1"
 
+    implementation("io.insert-koin:koin-android:3.2.0")
+
 
     implementation("androidx.work:work-runtime-ktx:$work_version")
 

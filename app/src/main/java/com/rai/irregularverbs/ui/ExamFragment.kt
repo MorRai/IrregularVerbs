@@ -16,9 +16,10 @@ import com.rai.irregularverbs.R
 import com.rai.irregularverbs.data.IrregularVerbs
 import com.rai.irregularverbs.databinding.FragmentExamBinding
 import com.rai.irregularverbs.viewmodels.ExamViewModel
-import com.rai.irregularverbs.viewmodels.ExamViewModelFactory
 import android.app.Activity
 import androidx.navigation.fragment.findNavController
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 
@@ -30,18 +31,13 @@ class ExamFragment : Fragment() {
         }
 
 
-    private val viewModel: ExamViewModel by activityViewModels {
-        ExamViewModelFactory(
-            (activity?.application as IrregularVerbsApplication).database.irregularVerbsDao()
-        )
-    }
+    private val viewModel by sharedViewModel<ExamViewModel>()
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentExamBinding.inflate(inflater, container, false)
         return binding.root
     }

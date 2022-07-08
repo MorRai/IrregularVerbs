@@ -24,6 +24,8 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel
     val randomVerb: LiveData<IrregularVerbs?>
         get() = _randomVerb
 
+
+
     private val _progress = MutableLiveData<Int>()
     val progress: LiveData<Int>
         get() = _progress
@@ -135,15 +137,3 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel
 
 }
 
-
-class ExamViewModelFactory(
-    private val irregularVerbsDao: IrregularVerbsDao
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ExamViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return ExamViewModel(irregularVerbsDao) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}

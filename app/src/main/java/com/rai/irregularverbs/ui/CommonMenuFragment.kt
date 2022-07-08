@@ -19,8 +19,7 @@ import com.rai.irregularverbs.constants.MenuType.EXAM
 import com.rai.irregularverbs.constants.MenuType.IMAGE
 import com.rai.irregularverbs.databinding.FragmentCommonMenuBinding
 import com.rai.irregularverbs.viewmodels.ExamViewModel
-import com.rai.irregularverbs.viewmodels.ExamViewModelFactory
-
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class CommonMenuFragment : Fragment() {
@@ -37,11 +36,8 @@ class CommonMenuFragment : Fragment() {
     private var blockPro = false
 
 
-    private val viewModel: ExamViewModel by activityViewModels {
-        ExamViewModelFactory(
-            (activity?.application as IrregularVerbsApplication).database.irregularVerbsDao()
-        )
-    }
+    private val viewModel by sharedViewModel<ExamViewModel>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
