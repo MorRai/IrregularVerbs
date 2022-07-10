@@ -7,48 +7,47 @@ import kotlinx.coroutines.launch
 import com.rai.irregularverbs.constants.Charpter.Most50
 import com.rai.irregularverbs.constants.Charpter.Plus50
 import com.rai.irregularverbs.constants.Charpter.Pro
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
-class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel() {
+class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao) : ViewModel() {
     var part: Int = 0
     var editText: String = ""
 
-    private val _checkVisibility = MutableLiveData<Boolean>()
-    val checkVisibility: LiveData<Boolean>
-        get() = _checkVisibility
 
-    private val _previousVerb = MutableLiveData<IrregularVerbs?>()
-    val previousVerb: LiveData<IrregularVerbs?>
-        get() = _previousVerb
-
-    private val _randomVerb = MutableLiveData<IrregularVerbs?>()
-    val randomVerb: LiveData<IrregularVerbs?>
+    private val _randomVerb = MutableStateFlow<IrregularVerbs?>(null)
+    val randomVerb: StateFlow<IrregularVerbs?>
         get() = _randomVerb
 
+    private val _previousVerb = MutableStateFlow<IrregularVerbs?>(null)
+    val previousVerb: StateFlow<IrregularVerbs?>
+        get() = _previousVerb
 
 
-    private val _progress = MutableLiveData<Int>()
-    val progress: LiveData<Int>
+    private val _checkVisibility = MutableStateFlow(false)
+    val checkVisibility: StateFlow<Boolean>
+        get() = _checkVisibility
+
+    private val _progress = MutableStateFlow(0)
+    val progress: StateFlow<Int>
         get() = _progress
 
 
-    private val _blockMost50 = MutableLiveData<Boolean>()
-    val blockMost50: LiveData<Boolean>
+    private val _blockMost50 = MutableStateFlow(false)
+    val blockMost50: StateFlow<Boolean>
         get() = _blockMost50
 
-    private val _blockPlus50 = MutableLiveData<Boolean>()
-    val blockPlus50: LiveData<Boolean>
+
+    private val _blockPlus50 = MutableStateFlow(false)
+    val blockPlus50: StateFlow<Boolean>
         get() = _blockPlus50
 
-    private val _blockPro = MutableLiveData<Boolean>()
-    val blockPro: LiveData<Boolean>
+    private val _blockPro = MutableStateFlow(false)
+    val blockPro: StateFlow<Boolean>
         get() = _blockPro
 
 
-
-
-
-
-     private fun getRandomVerb(){
+    private fun getRandomVerb() {
         viewModelScope.launch {
             _randomVerb.value = irregularVerbsDao.getRandom(part)
         }
@@ -75,14 +74,14 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel
     fun getAvailability() {
         viewModelScope.launch {
             _blockMost50.value = irregularVerbsDao.getAvailability(Most50) == 0
-            _blockPlus50.value = irregularVerbsDao.getAvailability(Plus50)== 0
-            _blockPro.value = irregularVerbsDao.getAvailability(Pro)== 0
+            _blockPlus50.value = irregularVerbsDao.getAvailability(Plus50) == 0
+            _blockPro.value = irregularVerbsDao.getAvailability(Pro) == 0
         }
     }
 
-    fun getV2orV3(verb: IrregularVerbs): Int{
+    fun getV2orV3(verb: IrregularVerbs): Int {
         return when {
-            verb.numCorrectV3>= 3 -> {
+            verb.numCorrectV3 >= 3 -> {
                 2
             }
             verb.numCorrectV2 >= 3 -> {
@@ -94,41 +93,50 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao): ViewModel
         }
     }
 
-    fun nextVerb(verb: IrregularVerbs,textCheck:String,editText:String, getV2orV3: Int) {
-        refresh(verb,textCheck,editText, getV2orV3)
+    fun nextVerb(verb: IrregularVerbs, textCheck: String, editText: String, getV2orV3: Int) {
+        refresh(verb, textCheck, editText, getV2orV3)
         getRandomVerb()
         getComplete()
     }
 
-    private fun refresh(irregularVerbs: IrregularVerbs,textCheck:String,editText:String, getV2orV3: Int){
-        if(editText==textCheck){
+    private fun refresh(
+        irregularVerbs: IrregularVerbs,
+        textCheck: String,
+        editText: String,
+        getV2orV3: Int,
+    ) {
+        if (editText == textCheck) {
             _checkVisibility.value = false
             if (getV2orV3 == 2) {
-                val newIrregularVerbs = irregularVerbs.copy(numCorrectV2 = irregularVerbs.numCorrectV2 + 1)
+                val newIrregularVerbs =
+                    irregularVerbs.copy(numCorrectV2 = irregularVerbs.numCorrectV2 + 1)
                 updateItem(newIrregularVerbs)
-            }else{
-                val newIrregularVerbs = irregularVerbs.copy(numCorrectV3 = irregularVerbs.numCorrectV3 + 1)
+            } else {
+                val newIrregularVerbs =
+                    irregularVerbs.copy(numCorrectV3 = irregularVerbs.numCorrectV3 + 1)
                 updateItem(newIrregularVerbs)
             }
 
-        }else{
+        } else {
             _checkVisibility.value = true
             _previousVerb.value = irregularVerbs
-            if (getV2orV3 == 2) {
-                val newIrregularVerbs = irregularVerbs.copy(numCorrectV2 = irregularVerbs.numCorrectV2 - 1)
+            if (getV2orV3 == 2 && irregularVerbs.numCorrectV2 > 0) {
+                val newIrregularVerbs =
+                    irregularVerbs.copy(numCorrectV2 = irregularVerbs.numCorrectV2 - 1)
                 updateItem(newIrregularVerbs)
-            }else{
-                val newIrregularVerbs = irregularVerbs.copy(numCorrectV3 = irregularVerbs.numCorrectV3 - 1)
+            } else if (irregularVerbs.numCorrectV3 > 0) {
+                val newIrregularVerbs =
+                    irregularVerbs.copy(numCorrectV3 = irregularVerbs.numCorrectV3 - 1)
                 updateItem(newIrregularVerbs)
             }
         }
     }
 
-    fun updateEditText(editText:String){
+    fun updateEditText(editText: String) {
         this.editText = editText
     }
 
-    fun clearIrregular(){
+    fun clearIrregular() {
         _checkVisibility.value = false
         _previousVerb.value = null
         getRandomVerb()

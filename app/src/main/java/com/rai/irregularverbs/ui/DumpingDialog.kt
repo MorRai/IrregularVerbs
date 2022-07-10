@@ -7,7 +7,6 @@ import androidx.fragment.app.DialogFragment
 import com.rai.irregularverbs.R
 import com.rai.irregularverbs.viewmodels.ExamViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class DumpingDialog: DialogFragment() {

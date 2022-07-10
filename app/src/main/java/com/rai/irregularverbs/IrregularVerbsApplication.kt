@@ -8,7 +8,6 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
 class IrregularVerbsApplication : Application() {
-    //val database: IrregularVerbsDatabase by lazy { IrregularVerbsDatabase.getDatabase(this ) }
 
     override fun onCreate() {
         super.onCreate()
