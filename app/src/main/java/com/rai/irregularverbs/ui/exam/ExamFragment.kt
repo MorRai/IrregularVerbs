@@ -1,7 +1,8 @@
-package com.rai.irregularverbs.ui
+package com.rai.irregularverbs.ui.exam
 
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
@@ -13,13 +14,13 @@ import android.view.inputmethod.InputMethodManager
 import com.rai.irregularverbs.R
 import com.rai.irregularverbs.data.IrregularVerbs
 import com.rai.irregularverbs.databinding.FragmentExamBinding
-import com.rai.irregularverbs.viewmodels.ExamViewModel
-import android.app.Activity
-import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import androidx.navigation.fragment.navArgs
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import java.util.*
 
 
@@ -30,9 +31,11 @@ class ExamFragment : Fragment() {
             "View was destroyed"
         }
 
+    private val args by navArgs<ExamFragmentArgs>()
 
-    private val viewModel by sharedViewModel<ExamViewModel>()
-
+    private val viewModel by viewModel<ExamViewModel>{
+        parametersOf(args.chapter)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,34 +49,32 @@ class ExamFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycle.coroutineScope.launch {
-            viewModel.randomVerb.collect {
+        viewModel.randomVerb.onEach {
                 if (it != null) {
                     bind(it)
                 } else {
-                    findNavController().popBackStack()
+                   // findNavController().popBackStack()
                 }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-            }
-            viewModel.previousVerb.collect {
+            viewModel.previousVerb.onEach {
                 if (it != null) {
                     refresh(it)
                 }
-            }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-            viewModel.checkVisibility.collect {
+            viewModel.checkVisibility.onEach {
                 refreshVisibility(it)
-            }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-            viewModel.progress.collect {
-                val fileSize = 300
+            viewModel.progress.onEach {
+                val fileSize = 300// нужно получать из базы
                 binding.progressBar.max = fileSize
                 binding.progressBar.progress = it
                 val percentage = (it.toDouble() / fileSize * 100)
                 binding.progress.text = "${String.format("%.2f", percentage)}%"
-                binding.level.text = getString(R.string.level, viewModel.part.toString())
-            }
-        }
+                binding.level.text = getString(R.string.level, args.chapter.toString())
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun bind(irregularVerbs: IrregularVerbs) {
@@ -114,12 +115,10 @@ class ExamFragment : Fragment() {
         }
     }
 
-
     private fun refresh(irregularVerbs: IrregularVerbs) {
         with(binding) {
             answerText.text = getString(R.string.text_answer, viewModel.editText)
             answerText.paintFlags = answerText.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-
             answerForm1.text = irregularVerbs.form1
             answerForm2.text = irregularVerbs.form2
             answerForm3.text = irregularVerbs.form3

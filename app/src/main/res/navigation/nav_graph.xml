@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/commonMenuFragment"
-        android:name="com.rai.irregularverbs.ui.CommonMenuFragment"
+        android:name="com.rai.irregularverbs.ui.commonMenu.CommonMenuFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_common_menu">
         <action
@@ -38,12 +38,13 @@
     </fragment>
     <fragment
         android:id="@+id/examFragment"
-        android:name="com.rai.irregularverbs.ui.ExamFragment"
+        android:name="com.rai.irregularverbs.ui.exam.ExamFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_exam">
         <argument
             android:name="chapter"
-            app:argType="integer" />
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/imagesFragment"

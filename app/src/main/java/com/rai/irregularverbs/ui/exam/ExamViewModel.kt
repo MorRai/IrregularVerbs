@@ -1,17 +1,18 @@
-package com.rai.irregularverbs.viewmodels
+package com.rai.irregularverbs.ui.exam
 
 import androidx.lifecycle.*
 import com.rai.irregularverbs.data.IrregularVerbs
 import com.rai.irregularverbs.data.IrregularVerbsDao
 import kotlinx.coroutines.launch
-import com.rai.irregularverbs.constants.Charpter.Most50
-import com.rai.irregularverbs.constants.Charpter.Plus50
-import com.rai.irregularverbs.constants.Charpter.Pro
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.mapLatest
 
-class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao) : ViewModel() {
-    var part: Int = 0
+class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao,
+                    private val part: Int,
+                    ) : ViewModel() {
+
     var editText: String = ""
 
 
@@ -19,49 +20,34 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao) : ViewMode
     val randomVerb: StateFlow<IrregularVerbs?>
         get() = _randomVerb
 
-    private val _previousVerb = MutableStateFlow<IrregularVerbs?>(null)
-    val previousVerb: StateFlow<IrregularVerbs?>
-        get() = _previousVerb
 
-
-    private val _checkVisibility = MutableStateFlow(false)
-    val checkVisibility: StateFlow<Boolean>
-        get() = _checkVisibility
 
     private val _progress = MutableStateFlow(0)
     val progress: StateFlow<Int>
         get() = _progress
 
+    init {
+        getRandomVerb()
+        getComplete()
+    }
 
-    private val _blockMost50 = MutableStateFlow(false)
-    val blockMost50: StateFlow<Boolean>
-        get() = _blockMost50
 
 
-    private val _blockPlus50 = MutableStateFlow(false)
-    val blockPlus50: StateFlow<Boolean>
-        get() = _blockPlus50
 
-    private val _blockPro = MutableStateFlow(false)
-    val blockPro: StateFlow<Boolean>
-        get() = _blockPro
+    private val _previousVerb = MutableStateFlow<IrregularVerbs?>(null)
+    val previousVerb: StateFlow<IrregularVerbs?>
+        get() = _previousVerb
+
+    private val _checkVisibility = MutableStateFlow(false)
+    val checkVisibility: StateFlow<Boolean>
+        get() = _checkVisibility
+
+
 
 
     private fun getRandomVerb() {
         viewModelScope.launch {
             _randomVerb.value = irregularVerbsDao.getRandom(part)
-        }
-    }
-
-    private fun updateItem(verb: IrregularVerbs) {
-        viewModelScope.launch {
-            irregularVerbsDao.update(verb)
-        }
-    }
-
-    fun dumpPart() {
-        viewModelScope.launch {
-            irregularVerbsDao.dumpPart(part)
         }
     }
 
@@ -71,11 +57,9 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao) : ViewMode
         }
     }
 
-    fun getAvailability() {
+    private fun updateItem(verb: IrregularVerbs) {
         viewModelScope.launch {
-            _blockMost50.value = irregularVerbsDao.getAvailability(Most50) == 0
-            _blockPlus50.value = irregularVerbsDao.getAvailability(Plus50) == 0
-            _blockPro.value = irregularVerbsDao.getAvailability(Pro) == 0
+            irregularVerbsDao.update(verb)
         }
     }
 

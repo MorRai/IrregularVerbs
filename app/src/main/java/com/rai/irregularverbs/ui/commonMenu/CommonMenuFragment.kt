@@ -1,4 +1,4 @@
-package com.rai.irregularverbs.ui
+package com.rai.irregularverbs.ui.commonMenu
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.rai.irregularverbs.R
@@ -17,9 +17,8 @@ import com.rai.irregularverbs.constants.Charpter.Pro
 import com.rai.irregularverbs.constants.MenuType.EXAM
 import com.rai.irregularverbs.constants.MenuType.IMAGE
 import com.rai.irregularverbs.databinding.FragmentCommonMenuBinding
-import com.rai.irregularverbs.viewmodels.ExamViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
@@ -37,26 +36,24 @@ class CommonMenuFragment : Fragment() {
     private var blockPro = false
 
 
-    private val viewModel by sharedViewModel<ExamViewModel>()
+    private val viewModel by sharedViewModel<CommonMenuViewModel>()
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        typeMenu = CommonMenuFragmentArgs.fromBundle(requireArguments()).typeMenu
         _binding = FragmentCommonMenuBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel.getAvailability()
+        typeMenu = CommonMenuFragmentArgs.fromBundle(requireArguments()).typeMenu
         if (typeMenu == EXAM) {
-            viewModel.getAvailability()
             val mImage = ResourcesCompat.getDrawable(resources, R.drawable.completed, null)
-            lifecycle.coroutineScope.launch {
-                viewModel.blockMost50.collect {
+                viewModel.blockMost50.onEach {
                     if (it) {
                         binding.most50Button.setCompoundDrawablesWithIntrinsicBounds(mImage,
                             null,
@@ -69,8 +66,9 @@ class CommonMenuFragment : Fragment() {
                             null)
                     }
                     blockMost50 = it
-                }
-                viewModel.blockPlus50.collect {
+                    viewModel.getAvailability()
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
+                viewModel.blockPlus50.onEach {
                     if (it) {
                         binding.plus50Button.setCompoundDrawablesWithIntrinsicBounds(mImage,
                             null,
@@ -83,8 +81,8 @@ class CommonMenuFragment : Fragment() {
                             null)
                     }
                     blockPlus50 = it
-                }
-                viewModel.blockPro.collect {
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
+                viewModel.blockPro.onEach {
                     if (it) {
                         binding.proButton.setCompoundDrawablesWithIntrinsicBounds(mImage,
                             null,
@@ -97,8 +95,8 @@ class CommonMenuFragment : Fragment() {
                             null)
                     }
                     blockPro = it
-                }
-            }
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
+
         }
         bind()
 
@@ -109,14 +107,13 @@ class CommonMenuFragment : Fragment() {
         when (typeMenu) {
             EXAM -> {
                 viewModel.part = chapter
-                viewModel.clearIrregular()
-                if ((blockMost50 && chapter == Most50) || (blockPlus50 && chapter == Plus50) || (blockPro && chapter == Pro)) {
+                return if ((blockMost50 && chapter == Most50) || (blockPlus50 && chapter == Plus50) || (blockPro && chapter == Pro)) {
                     val myDialogFragment = DumpingDialog()
                     val manager = (activity as FragmentActivity).supportFragmentManager
                     myDialogFragment.show(manager, "myDialog")
-                    return null
+                    null
                 } else {
-                    return CommonMenuFragmentDirections.actionCommonMenuFragmentToExamFragment(
+                    CommonMenuFragmentDirections.actionCommonMenuFragmentToExamFragment(
                         chapter)
                 }
             }
@@ -133,7 +130,7 @@ class CommonMenuFragment : Fragment() {
 
 
     private fun bind() {
-        binding.apply {
+       with(binding){
             most50Button.setOnClickListener {
                 val action = returnAction(Most50)
                 if (action != null) {

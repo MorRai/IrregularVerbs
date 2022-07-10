@@ -1,17 +1,17 @@
-package com.rai.irregularverbs.ui
+package com.rai.irregularverbs.ui.commonMenu
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.rai.irregularverbs.R
-import com.rai.irregularverbs.viewmodels.ExamViewModel
+import com.rai.irregularverbs.ui.commonMenu.CommonMenuViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class DumpingDialog: DialogFragment() {
 
-    private val viewModel by sharedViewModel<ExamViewModel>()
+    private val viewModel by sharedViewModel<CommonMenuViewModel>()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity,R.style.CustomDialogTheme)
