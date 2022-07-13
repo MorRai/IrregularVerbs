@@ -3,6 +3,12 @@ English Irregular Verb Trainer with list view, use case cards, and interactive f
 The language of the application depends on the language of the system, Russian support has been added, the default is English. On ImageView off-topic image for now
 
 ## Screenshot
+![Image alt](https://github.com/MorRai/IrregularVerbs/raw/master/screenshot/mainMenu.jpg)
+![Image alt](https://github.com/MorRai/IrregularVerbs/raw/master/screenshot/levelMenu.jpg)
+![Image alt](https://github.com/MorRai/IrregularVerbs/raw/master/screenshot/cardView.jpg)
+![Image alt](https://github.com/MorRai/IrregularVerbs/raw/master/screenshot/imageView.jpg)
+![Image alt](https://github.com/MorRai/IrregularVerbs/raw/master/screenshot/trainer.jpg)
+![Image alt](https://github.com/MorRai/IrregularVerbs/raw/master/screenshot/trainerError.jpg)
 
 
 ## Libraries and other stuff applied:
