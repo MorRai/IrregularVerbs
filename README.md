@@ -16,3 +16,7 @@ The language of the application depends on the language of the system, Russian s
 - Navigation
 - WorkManager
 - EasyFlip
+- Koin
+- Coroutine
+- kts
+- ViewModel
