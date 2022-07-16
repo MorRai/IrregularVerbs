@@ -4,9 +4,25 @@ The language of the application depends on the language of the system, Russian s
 
 ## Screenshot
 
+<p align="center">
+  <img src="screenshot/mainMenu.jpg" width="250" alt="mainMenu">
+  <img src="screenshot/levelMenu.jpg" width="250" alt="levelMenu">
+  <img src="screenshot/cardView.jpg" width="250" alt="cardView">
+</p>
+
+<p align="center">
+  <img src="screenshot/imageView.jpg" width="250" alt="imageView">
+  <img src="screenshot/trainer.jpg" width="250" alt="trainer">
+  <img src="screenshot/trainerError.jpg" width="250" alt="trainerError">
+</p>
+
 
 ## Libraries and other stuff applied:
 - Room
 - Navigation
 - WorkManager
 - EasyFlip
+- Koin
+- Coroutine
+- kts
+- ViewModel
