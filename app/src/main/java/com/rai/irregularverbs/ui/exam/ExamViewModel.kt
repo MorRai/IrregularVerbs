@@ -5,9 +5,7 @@ import com.rai.irregularverbs.data.IrregularVerbs
 import com.rai.irregularverbs.data.IrregularVerbsDao
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.mapLatest
 
 class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao,
                     private val part: Int,
@@ -15,24 +13,21 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao,
 
     var editText: String = ""
 
-
     private val _randomVerb = MutableStateFlow<IrregularVerbs?>(null)
     val randomVerb: StateFlow<IrregularVerbs?>
         get() = _randomVerb
-
-
 
     private val _progress = MutableStateFlow(0)
     val progress: StateFlow<Int>
         get() = _progress
 
     init {
-        getRandomVerb()
-        getComplete()
+        clearIrregular()
     }
 
-
-
+    private val _noneVerb = MutableStateFlow(false)
+    val noneVerb: StateFlow<Boolean>
+        get() = _noneVerb
 
     private val _previousVerb = MutableStateFlow<IrregularVerbs?>(null)
     val previousVerb: StateFlow<IrregularVerbs?>
@@ -42,12 +37,12 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao,
     val checkVisibility: StateFlow<Boolean>
         get() = _checkVisibility
 
-
-
-
     private fun getRandomVerb() {
         viewModelScope.launch {
             _randomVerb.value = irregularVerbsDao.getRandom(part)
+            if (_randomVerb.value  == null){
+                _noneVerb.value = true
+            }
         }
     }
 
@@ -120,9 +115,7 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao,
         this.editText = editText
     }
 
-    fun clearIrregular() {
-        _checkVisibility.value = false
-        _previousVerb.value = null
+    private fun clearIrregular() {
         getRandomVerb()
         getComplete()
     }

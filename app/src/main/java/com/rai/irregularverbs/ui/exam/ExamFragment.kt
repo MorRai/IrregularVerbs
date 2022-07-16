@@ -3,6 +3,7 @@ package com.rai.irregularverbs.ui.exam
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
@@ -19,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.util.*
@@ -33,7 +35,7 @@ class ExamFragment : Fragment() {
 
     private val args by navArgs<ExamFragmentArgs>()
 
-    private val viewModel by viewModel<ExamViewModel>{
+    private val viewModel by viewModel<ExamViewModel> {
         parametersOf(args.chapter)
     }
 
@@ -50,31 +52,36 @@ class ExamFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.randomVerb.onEach {
-                if (it != null) {
-                    bind(it)
-                } else {
-                   // findNavController().popBackStack()
-                }
-            }.launchIn(viewLifecycleOwner.lifecycleScope)
+            if (it != null) {
+                bind(it)
+            }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-            viewModel.previousVerb.onEach {
-                if (it != null) {
-                    refresh(it)
-                }
-            }.launchIn(viewLifecycleOwner.lifecycleScope)
+        viewModel.previousVerb.onEach {
+            if (it != null) {
+                refresh(it)
+            }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-            viewModel.checkVisibility.onEach {
-                refreshVisibility(it)
-            }.launchIn(viewLifecycleOwner.lifecycleScope)
+        viewModel.checkVisibility.onEach {
+            refreshVisibility(it)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-            viewModel.progress.onEach {
-                val fileSize = 300// нужно получать из базы
-                binding.progressBar.max = fileSize
-                binding.progressBar.progress = it
-                val percentage = (it.toDouble() / fileSize * 100)
-                binding.progress.text = "${String.format("%.2f", percentage)}%"
-                binding.level.text = getString(R.string.level, args.chapter.toString())
-            }.launchIn(viewLifecycleOwner.lifecycleScope)
+        viewModel.noneVerb.onEach {
+            if (it) {
+                findNavController().popBackStack()
+            }
+
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.progress.onEach {
+            val fileSize = 300// нужно получать из базы
+            binding.progressBar.max = fileSize
+            binding.progressBar.progress = it
+            val percentage = (it.toDouble() / fileSize * 100)
+            binding.progress.text = "${String.format("%.2f", percentage)}%"
+            binding.level.text = getString(R.string.level, args.chapter.toString())
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun bind(irregularVerbs: IrregularVerbs) {
