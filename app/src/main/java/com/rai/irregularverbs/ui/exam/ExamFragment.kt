@@ -71,7 +71,6 @@ class ExamFragment : Fragment() {
             if (it) {
                 findNavController().popBackStack()
             }
-
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.progress.onEach {

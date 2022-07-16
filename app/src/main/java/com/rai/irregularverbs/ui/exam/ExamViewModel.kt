@@ -7,9 +7,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao,
-                    private val part: Int,
-                    ) : ViewModel() {
+class ExamViewModel(
+    private val irregularVerbsDao: IrregularVerbsDao,
+    private val part: Int,
+) : ViewModel() {
 
     var editText: String = ""
 
@@ -22,7 +23,7 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao,
         get() = _progress
 
     init {
-        clearIrregular()
+        getIrregular()
     }
 
     private val _noneVerb = MutableStateFlow(false)
@@ -37,25 +38,19 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao,
     val checkVisibility: StateFlow<Boolean>
         get() = _checkVisibility
 
-    private fun getRandomVerb() {
-        viewModelScope.launch {
-            _randomVerb.value = irregularVerbsDao.getRandom(part)
-            if (_randomVerb.value  == null){
-                _noneVerb.value = true
-            }
+    private suspend fun getRandomVerb() {
+        _randomVerb.value = irregularVerbsDao.getRandom(part)
+        if (_randomVerb.value == null) {
+            _noneVerb.value = true
         }
     }
 
-    private fun getComplete() {
-        viewModelScope.launch {
-            _progress.value = irregularVerbsDao.getComplete(part)
-        }
+    private suspend fun getComplete() {
+        _progress.value = irregularVerbsDao.getComplete(part)
     }
 
-    private fun updateItem(verb: IrregularVerbs) {
-        viewModelScope.launch {
-            irregularVerbsDao.update(verb)
-        }
+    private suspend fun updateItem(verb: IrregularVerbs) {
+        irregularVerbsDao.update(verb)
     }
 
     fun getV2orV3(verb: IrregularVerbs): Int {
@@ -73,12 +68,14 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao,
     }
 
     fun nextVerb(verb: IrregularVerbs, textCheck: String, editText: String, getV2orV3: Int) {
-        refresh(verb, textCheck, editText, getV2orV3)
-        getRandomVerb()
-        getComplete()
+        viewModelScope.launch {
+            refresh(verb, textCheck, editText, getV2orV3)
+            getComplete()
+            getRandomVerb()
+        }
     }
 
-    private fun refresh(
+    private suspend fun refresh(
         irregularVerbs: IrregularVerbs,
         textCheck: String,
         editText: String,
@@ -115,9 +112,11 @@ class ExamViewModel(private val irregularVerbsDao: IrregularVerbsDao,
         this.editText = editText
     }
 
-    private fun clearIrregular() {
-        getRandomVerb()
-        getComplete()
+    private fun getIrregular() {
+        viewModelScope.launch {
+            getRandomVerb()
+            getComplete()
+        }
     }
 
 }
