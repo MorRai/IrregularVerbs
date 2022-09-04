@@ -3,8 +3,6 @@ package com.rai.irregularverbs.ui.exam
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
-import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.res.ResourcesCompat
 import com.rai.irregularverbs.R
 import com.rai.irregularverbs.data.IrregularVerbs
 import com.rai.irregularverbs.databinding.FragmentExamBinding
@@ -20,7 +19,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.util.*
@@ -111,11 +109,11 @@ class ExamFragment : Fragment() {
                 viewModel.nextVerb(irregularVerbs, textCheck, editText.text.toString(), getV2orV3)
                 editText.setText("")
                 if (getV2orV3 == 2) {
-                    mcvForm2.setBackgroundColor(Color.GREEN)
-                    mcvForm3.setBackgroundColor(resources.getColor(R.color.primaryDarkColor))
+                    mcvForm2.setBackgroundColor(ResourcesCompat.getColor(resources,R.color.primaryLightColor,null))
+                    mcvForm3.setBackgroundColor(ResourcesCompat.getColor(resources,R.color.secondaryColor,null))
                 } else {
-                    mcvForm2.setBackgroundColor(resources.getColor(R.color.primaryDarkColor))
-                    mcvForm3.setBackgroundColor(Color.GREEN)
+                    mcvForm2.setBackgroundColor(ResourcesCompat.getColor(resources,R.color.secondaryColor,null))
+                    mcvForm3.setBackgroundColor(ResourcesCompat.getColor(resources,R.color.primaryLightColor,null))
                 }
             }
         }

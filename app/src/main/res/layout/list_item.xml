@@ -44,6 +44,7 @@
         android:textStyle="normal|italic"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/greyDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/form1"
         app:layout_constraintStart_toStartOf="@+id/form1"

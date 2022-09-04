@@ -3,25 +3,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="greyBack">#f5f5f6</color>
-    <color name="primaryColor">#fceb16</color>
-
-    <color name="primaryLightColor">#ffff5c</color>
-
-    <color name="primaryDarkColor">#c5b900</color>
-
-    <color name="secondaryColor">#343e4a</color>
-
-    <color name="secondaryLightColor">#5e6876</color>
-
-    <color name="secondaryDarkColor">#0e1822</color>
-
+    <color name="greyDark">#414139</color>
+    <color name="primaryColor">#ffd54f</color>
+    <color name="primaryLightColor">#ffff81</color>
+    <color name="primaryDarkColor">#c8a415</color>
+    <color name="secondaryColor">#ffb74d</color>
+    <color name="secondaryLightColor">#ffe97d</color>
+    <color name="secondaryDarkColor">#c88719</color>
     <color name="primaryTextColor">#000000</color>
-
-    <color name="secondaryTextColor">#feea15</color>
-
-
+    <color name="secondaryTextColor">#000000</color>
     <color name="hint_color">#f5eed2</color>
-
-
-
 </resources>
