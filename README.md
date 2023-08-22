@@ -18,7 +18,7 @@ The language of the application depends on the language of the system, Russian s
 
 ## Video
 
-https://github.com/MorRai/IrregularVerbs/assets/77611034/dce6da11-0562-4666-a9a5-cedef2d6f7cc
+https://github.com/MorRai/IrregularVerbs/screenshot/IrregularVerb.mp4
 
 
 ## Libraries and other stuff applied:
