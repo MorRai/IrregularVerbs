@@ -16,6 +16,10 @@ The language of the application depends on the language of the system, Russian s
   <img src="screenshot/trainerError.jpg" width="250" alt="trainerError">
 </p>
 
+## Video
+
+https://github.com/MorRai/IrregularVerbs/assets/77611034/dce6da11-0562-4666-a9a5-cedef2d6f7cc
+
 
 ## Libraries and other stuff applied:
 - Room
